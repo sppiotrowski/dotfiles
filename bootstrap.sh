@@ -23,8 +23,11 @@ function install_vim() {
     git clone https://github.com/gmarik/vundle.git "$SPP_HOME/vim/bundle/vundle"
 
     # setup vim env
-    ln -s "$SPP_HOME"/vimrc "$HOME"/.vimrc
-    ln -s "$SPP_HOME"/vim "$HOME"/.vim
+    ln -s "$SPP_HOME/vimrc" "$HOME/.vimrc"
+    ln -s "$SPP_HOME/vim" "$HOME/.vim"
+
+    # fonts for 'powerline'
+    cp "$SPP_HOME/fonts/* $HOME/Library/Fonts"
 }
 
 function show_usage() {
