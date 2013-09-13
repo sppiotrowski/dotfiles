@@ -7,7 +7,8 @@ function clean() {
     echo 'cleaning env...'
     if [ $FORCE ]; then
         echo 'you are using the force...'
-        rm -rf "$SPP_HOME" "$HOME/.vimrc" "$HOME/.vim"
+        rm -rf "$SPP_HOME"
+        rm -rf "$HOME/.vimrc" "$HOME/.vim" "$HOME/.tmux.conf"
     fi
 }
 
@@ -30,19 +31,28 @@ function install_vim() {
     cp "$SPP_HOME/fonts/* $HOME/Library/Fonts"
 }
 
+function install_tmux() {
+    brew install tmux
+    ln -s "$SPP_HOME/tmux/tmux.conf " "$HOME/.tmux.conf"
+}
+
 function show_usage() {
     echo 'usage: ./bootstrap.sh or ./bootstrap.sh -f for force installing'
 }
 
+function install() {
+    install_vim
+}
+
 if [ ! $* ]; then
     FORCE=''
-    clean && install_vim
+    clean && install
 else
     while getopts hf flag; do
         case $flag in
             f)
                 FORCE=true
-                clean && install_vim
+                clean && install
                 ;;
             h)
                 show_usage
