@@ -4,8 +4,10 @@ SPP_HOME=${HOME}/.spp
 
 ITERM_PLIST_PATH=${HOME}/Library/Preferences/com.googlecode.iterm2.plist
 
-function installed() {
-    [ $(brew list | grep $1 2>/dev/null) ] && echo installed
+function install() {
+    if [ ! $(brew list | grep $1 2>/dev/null) ]; then
+        brew install $1
+    fi
 }
 
 function clean() {
@@ -13,7 +15,7 @@ function clean() {
     if [ $FORCE ]; then
         echo you are using the force...
         rm -rf $SPP_HOME
-        rm -rf ${HOME}/.vimrc ${HOME}/.vim ${HOME}/.tmux.conf
+        rm ${HOME}/.vimrc ${HOME}/.vim ${HOME}/.tmux.conf ${HOME}/.gitconfig
         /usr/libexec/PlistBuddy -c "Delete :'Custom Color Presets':'Solarized Light' dict" $ITERM_PLIST_PATH 2> /dev/null
         /usr/libexec/PlistBuddy -c "Delete :'Custom Color Presets':'Solarized Dark' dict" $ITERM_PLIST_PATH 2> /dev/null
         echo cleaned
@@ -41,8 +43,13 @@ function install_vim() {
 
 
 function install_tmux() {
-    [ $(installed 'tmux') ] || brew install tmux
+    install 'tmux'
     ln -s ${SPP_HOME}/tmux/tmux.conf ${HOME}/.tmux.conf
+}
+
+function install_git() {
+    install 'git'
+    ln -s ${SPP_HOME}/git/gitconfig ${HOME}/.gitconfig
 }
 
 function configure_iterm() {
@@ -73,21 +80,22 @@ function show_usage() {
     echo usage: ./bootstrap.sh or ./bootstrap.sh -f for force installing
 }
 
-function install() {
+function install_all() {
     install_vim
     install_tmux
+    install_git
     configure_iterm
 }
 
 if [ ! $* ]; then
     FORCE=
-    clean && install
+    clean && install_all
 else
     while getopts hf flag; do
         case $flag in
             f)
                 FORCE=true
-                clean && install
+                clean && install_all
                 ;;
             h)
                 show_usage
