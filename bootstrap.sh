@@ -11,9 +11,9 @@ function clean() {
         echo you are using the force...
         rm -rf "$SPP_HOME"
         rm -rf "$HOME"/.vimrc "$HOME"/.vim "$HOME"/.tmux.conf
-        #/usr/libexec/PlistBuddy -c "Delete :Custom Color Presets:Solarized Light' dict" $ITERM_PLIST_PATH 2> /dev/null
-        #/usr/libexec/PlistBuddy -c "Delete :Custom Color Presets:Solarized Dark' dict" $ITERM_PLIST_PATH 2> /dev/null
-        echo 'cleaned'
+        /usr/libexec/PlistBuddy -c "Delete :'Custom Color Presets':'Solarized Light' dict" $ITERM_PLIST_PATH 2> /dev/null
+        /usr/libexec/PlistBuddy -c "Delete :'Custom Color Presets':'Solarized Dark' dict" $ITERM_PLIST_PATH 2> /dev/null
+        echo cleaned
     fi
 }
 
@@ -37,33 +37,32 @@ function install_vim() {
 }
 
 function install_tmux() {
-    brew install tmux
+    [ $(brew list | grep [t]mux 2>/dev/null) ] || brew install tmux
     ln -s "$SPP_HOME/tmux/tmux.conf" "$HOME/.tmux.conf"
 }
 
 function configure_iterm() {
     cd $SPP_HOME
 
-    /usr/libexec/PlistBuddy -c "Add :Custom Color Presets:Solarized Light' dict" $ITERM_PLIST_PATH
-    /usr/libexec/PlistBuddy -c "Merge iTerm2/Solarized Light.itermcolors :Custom Color Presets':'Solarized Light'" $ITERM_PLIST_PATH
-    /usr/libexec/PlistBuddy -c "Add :Custom Color Presets:Solarized Dark' dict" $ITERM_PLIST_PATH
-    /usr/libexec/PlistBuddy -c "Merge iTerm2/Solarized Dark.itermcolors :Custom Color Presets':'Solarized Dark'" $ITERM_PLIST_PATH
+    /usr/libexec/PlistBuddy -c "Add  :'Custom Color Presets':'Solarized Light' dict" $ITERM_PLIST_PATH
+    /usr/libexec/PlistBuddy -c "Merge 'iTerm2/Solarized Light.itermcolors' :'Custom Color Presets':'Solarized Light'" $ITERM_PLIST_PATH
+    /usr/libexec/PlistBuddy -c "Add :'Custom Color Presets':'Solarized Dark' dict" $ITERM_PLIST_PATH
+    /usr/libexec/PlistBuddy -c "Merge 'iTerm2/Solarized Dark.itermcolors' :'Custom Color Presets':'Solarized Dark'" $ITERM_PLIST_PATH
 
-    dark_scheme_path="$SPP_HOME"'/iTerm2/Solarized Dark.itermcolors'
-    light_scheme_path="$SPP_HOME"'/iTerm2/Solarized Light.itermcolors'
+    dark_scheme_path="iTerm2/Solarized Dark.itermcolors"
+    light_scheme_path="iTerm2/Solarized Light.itermcolors"
     # TODO: should user be asked?
-    color_scheme_path=$dark_scheme_path
+    color_scheme_path="${dark_scheme_path}"
 
-    colors='Background Color,Bold Color,Cursor Color,Cursor Text Color,Foreground Color,Selected Text Color,Selection Color'
+    colors=('Background Color' 'Bold Color' 'Cursor Color' 'Cursor Text Color' 'Foreground Color' 'Selected Text Color' 'Selection Color')
     for c in $(seq 16); do
-        colors+=",Ansi ${c} Color"
+        color=$((c-1))
+        colors+=("Ansi ${color} Color")
     done
-    echo $colors
-    for color in $(awk -F, '{for (i=1; i<=NF; i++) print $i}' <<< $colors); do
-        #/usr/libexec/PlistBuddy -c "Delete :New Bookmarks:0:${color}'" $ITERM_PLIST_PATH
-        echo "$color"
+    for color in "${colors[@]}"; do
+        /usr/libexec/PlistBuddy -c "Delete :'New Bookmarks':0:'${color}'" $ITERM_PLIST_PATH
     done
-    /usr/libexec/PlistBuddy -c "Merge ${color_scheme_path} :New Bookmarks':0" $ITERM_PLIST_PATH
+    /usr/libexec/PlistBuddy -c "Merge '${color_scheme_path}' :'New Bookmarks':0" $ITERM_PLIST_PATH
 }
 
 function show_usage() {
@@ -73,7 +72,7 @@ function show_usage() {
 function install() {
     install_vim
     install_tmux
-    #configure_iterm
+    configure_iterm
 }
 
 if [ ! $* ]; then
