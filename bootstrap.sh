@@ -1,16 +1,19 @@
 #!/usr/bin/env bash -u
 
-SPP_HOME="$HOME/.spp"
+SPP_HOME=${HOME}/.spp
 
-ITERM_PLIST_PATH="$HOME/Library/Preferences/com.googlecode.iterm2.plist"
-alias plistbuddy=/usr/libexec/PlistBuddy
+ITERM_PLIST_PATH=${HOME}/Library/Preferences/com.googlecode.iterm2.plist
+
+function installed() {
+    [ $(brew list | grep $1 2>/dev/null) ] && echo installed
+}
 
 function clean() {
     echo cleaning env...
     if [ $FORCE ]; then
         echo you are using the force...
-        rm -rf "$SPP_HOME"
-        rm -rf "$HOME"/.vimrc "$HOME"/.vim "$HOME"/.tmux.conf
+        rm -rf $SPP_HOME
+        rm -rf ${HOME}/.vimrc ${HOME}/.vim ${HOME}/.tmux.conf
         /usr/libexec/PlistBuddy -c "Delete :'Custom Color Presets':'Solarized Light' dict" $ITERM_PLIST_PATH 2> /dev/null
         /usr/libexec/PlistBuddy -c "Delete :'Custom Color Presets':'Solarized Dark' dict" $ITERM_PLIST_PATH 2> /dev/null
         echo cleaned
@@ -25,20 +28,21 @@ function install_vim() {
         exit 1
     fi
 
-    git clone https://github.com/sppiotrowski/dotfiles.git "$SPP_HOME"
-    git clone https://github.com/gmarik/vundle.git "$SPP_HOME"/vim/bundle/vundle
+    git clone https://github.com/sppiotrowski/dotfiles.git $SPP_HOME
+    git clone https://github.com/gmarik/vundle.git ${SPP_HOME}/vim/bundle/vundle
 
     # setup vim env
-    ln -s "$SPP_HOME"/vimrc "$HOME"/.vimrc
-    ln -s "$SPP_HOME"/vim "$HOME"/.vim
+    ln -s ${SPP_HOME}/vimrc ${HOME}/.vimrc
+    ln -s ${SPP_HOME}/vim ${HOME}/.vim
 
     # fonts for powerline
-    cp "$SPP_HOME"/fonts/* "$HOME"/Library/Fonts
+    cp ${SPP_HOME}/fonts/* ${HOME}/Library/Fonts
 }
 
+
 function install_tmux() {
-    [ $(brew list | grep [t]mux 2>/dev/null) ] || brew install tmux
-    ln -s "$SPP_HOME/tmux/tmux.conf" "$HOME/.tmux.conf"
+    [ $(installed 'tmux') ] || brew install tmux
+    ln -s ${SPP_HOME}/tmux/tmux.conf ${HOME}/.tmux.conf
 }
 
 function configure_iterm() {
@@ -52,12 +56,12 @@ function configure_iterm() {
     dark_scheme_path="iTerm2/Solarized Dark.itermcolors"
     light_scheme_path="iTerm2/Solarized Light.itermcolors"
     # TODO: should user be asked?
-    color_scheme_path="${dark_scheme_path}"
+    color_scheme_path=${dark_scheme_path}
 
     colors=('Background Color' 'Bold Color' 'Cursor Color' 'Cursor Text Color' 'Foreground Color' 'Selected Text Color' 'Selection Color')
     for c in $(seq 16); do
         color=$((c-1))
-        colors+=("Ansi ${color} Color")
+        colors+=("Ansi $color Color")
     done
     for color in "${colors[@]}"; do
         /usr/libexec/PlistBuddy -c "Delete :'New Bookmarks':0:'${color}'" $ITERM_PLIST_PATH
