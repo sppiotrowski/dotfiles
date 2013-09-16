@@ -103,3 +103,10 @@ set wildignore+=*.png,*.jpg,*.gif
 set scrolloff=8         "Start scrolling when we're 8 lines away from margins
 set sidescrolloff=15
 set sidescroll=1
+
+" ================ Colorscheme ========================
+syntax enable
+set background=dark
+" set background=light
+g:solarized_termcolors=256
+colorscheme solarized
