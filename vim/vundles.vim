@@ -67,7 +67,7 @@ Bundle "vim-scripts/matchit.zip.git"
 Bundle "terryma/vim-multiple-cursors"
 
 " General vim improvements
-"Bundle "MarcWeber/vim-addon-mw-utils.git"
+Bundle "MarcWeber/vim-addon-mw-utils.git"
 Bundle "bogado/file-line.git"
 "Bundle "jistr/vim-nerdtree-tabs.git"
 Bundle "kien/ctrlp.vim"
