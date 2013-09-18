@@ -1,25 +1,47 @@
-" configuration based on: https://github.com/skwp/dotfiles/blob/master/vimrc
+" the configuration are based on:
+"   * https://github.com/skwp/dotfiles/blob/master/vimrc
+"   * https://raw.github.com/kepbod/ivim/master/vimrc
 "
-" Use Vim settings, rather then Vi settings (much better!).
-" This must be first, because it changes other options as a side effect.
-set nocompatible
-
-" TODO: this may not be in the correct place. It is intended to allow overriding <Leader>.
-" source ~/.vimrc.before if it exists.
-if filereadable(expand("~/.vimrc.before"))
-  source ~/.vimrc.before
-endif
+set nocompatible    " turn off plain vi compatibility
 
 " ================ General Config ====================
+
+filetype plugin indent on       " Enable filetype
+
+let mapleader=','               " Change the mapleader
+let maplocalleader='\'          " Change the maplocalleader
+set timeoutlen=500              " Time to wait for a command
+
+" Source the vimrc file after saving it
+autocmd BufWritePost .vimrc source $MYVIMRC
+" Fast edit the .vimrc file using ',x'
+nnoremap <Leader>x :tabedit $MYVIMRC<CR>
+
+set autoread                    "Reload files changed outside vim
+set autowrite                   " Write on make/shell commands
+set clipboard+=unnamed          " Yanks go on clipboard instead
+set spell                       " Spell checking on
+set modeline                    " Turn on modeline
+set encoding=utf-8              " Set utf-8 encoding
+set completeopt+=longest        " Optimize auto complete
+set completeopt-=preview        " Optimize auto complete
+set mousehide                   " Hide mouse after chars typed
+set mouse=a                     " Mouse in all modes
 
 set number                      "Line numbers are good
 set backspace=indent,eol,start  "Allow backspace in insert mode
 set history=1000                "Store lots of :cmdline history
 set showcmd                     "Show incomplete cmds down the bottom
 set showmode                    "Show current mode down the bottom
+
+" ????
+"
+"set noerrorbells
+"set novisualbell
+"set t_vb=
+" ????
 set gcr=a:blinkon0              "Disable cursor blink
 set visualbell                  "No sounds
-set autoread                    "Reload files changed outside vim
 
 " This makes vim act like all other editors, buffers can
 " exist in the background without being in a window.
@@ -29,11 +51,6 @@ set hidden
 "turn on syntax highlighting
 syntax on
 
-" Change leader to a comma because the backslash is too far away
-" That means all \x commands turn into ,x
-" The mapleader has to be set before vundle starts loading all
-" the plugins.
-let mapleader=","
 
 " =============== Vundle Initialization ===============
 " This loads all the plugins specified in ~/.vim/vundle.vim
@@ -110,3 +127,38 @@ set background=dark
 " set background=light
 g:solarized_termcolors=256
 colorscheme solarized
+"
+" syntastic config
+let g:syntastic_python_checkers=['pylama']"
+
+" neocompl config
+let g:neocomplcache_enable_at_startup = 1
+let g:neocomplcache_enable_at_startup=1
+let g:neocomplcache_enable_auto_delimiter=1
+let g:neocomplcache_enable_camel_case_completion=1
+let g:neocomplcache_enable_underbar_completion=1
+
+let g:snips_author='Xiao-Ou Zhang'
+let g:snips_email='kepbod@gmail.com'
+let g:snips_github='https://github.com/kepbod'
+
+" Tell Neosnippet about the other snippets
+let g:neosnippet#snippets_directory="$HOME/.vim/bundle/vim-snippets/snippets"
+let g:neosnippet#enable_snipmate_compatibility=1
+
+" Plugin key-mappings
+imap <C-K> <Plug>(neosnippet_expand_or_jump)
+smap <C-K> <Plug>(neosnippet_expand_or_jump)
+xmap <C-K> <Plug>(neosnippet_expand_target)
+
+" Map <C-E> to cancel completion
+inoremap <expr><C-E> neocomplcache#cancel_popup()
+
+" SuperTab like snippets behavior
+inoremap <expr><Tab> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-N>" : "\<Tab>"
+snoremap <expr><Tab> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<Tab>"
+inoremap <expr><S-Tab> pumvisible() ? "\<C-P>" : "\<S-Tab>"
+
+" CR/S-CR: close popup and save indent
+inoremap <expr><CR> delimitMate#WithinEmptyPair() ? "\<C-R>=delimitMate#ExpandReturn()\<CR>" : pumvisible() ? neocomplcache#close_popup() : "\<CR>"
+inoremap <expr><S-CR> pumvisible() ? neocomplcache#close_popup() "\<CR>" : "\<CR>"
