@@ -34,12 +34,6 @@ set history=1000                "Store lots of :cmdline history
 set showcmd                     "Show incomplete cmds down the bottom
 set showmode                    "Show current mode down the bottom
 
-" ????
-"
-"set noerrorbells
-"set novisualbell
-"set t_vb=
-" ????
 set gcr=a:blinkon0              "Disable cursor blink
 set visualbell                  "No sounds
 
@@ -86,6 +80,43 @@ set expandtab
 filetype plugin on
 filetype indent on
 
+" ================ Searching ======================
+set ignorecase " Case insensitive search
+set smartcase " Case sensitive when uc present
+set hlsearch " Highlight search terms
+set incsearch " Find as you type search
+set gdefault " turn on 'g' flag
+"
+" Use sane regexes
+nnoremap / /\v
+vnoremap / /\v
+cnoremap s/ s/\v
+nnoremap ? ?\v
+vnoremap ? ?\v
+cnoremap s? s?\v
+
+" Keep search matches in the middle of the window
+nnoremap n nzzzv
+nnoremap N Nzzzv
+nnoremap * *zzzv
+nnoremap # #zzzv
+nnoremap g* g*zzzv
+nnoremap g# g#zzzv
+
+" Visual search mappings
+function! s:VSetSearch()
+    let temp=@@
+    normal! gvy
+    let @/='\V'.substitute(escape(@@, '\'), '\n', '\\n', 'g')
+    let @@=temp
+endfunction
+vnoremap * :<C-U>call <SID>VSetSearch()<CR>//<CR>
+vnoremap # :<C-U>call <SID>VSetSearch()<CR>??<CR>
+
+" Use ,Space to toggle the highlight search
+nnoremap <Leader><Space> :set hlsearch!<CR>
+
+
 " Display tabs and trailing spaces visually
 set list listchars=tab:\ \ ,trail:·
 
@@ -121,44 +152,66 @@ set scrolloff=8         "Start scrolling when we're 8 lines away from margins
 set sidescrolloff=15
 set sidescroll=1
 
-" ================ Colorscheme ========================
+" ================ Color scheme ========================
 syntax enable
 set background=dark
-" set background=light
-g:solarized_termcolors=256
+if !has('gui_running')
+    set t_Co=256 " Use 256 colors
+endif
 colorscheme solarized
-"
+
+if has('gui_running')
+    if has('gui_gtk')
+        set guifont=DejaVu\ Sans\ Mono\ 12
+    elseif has('gui_macvim')
+        set guifont=Monaco:h12
+    endif
+endif
+
+" ================= new, to check"
+" Set title
+"set title
+"set titlestring=%t%(\ %M%)%(\ (%{expand(\"%:p:h\")})%)%(\ %a%)\ -\ %{v:servername}
+
 " syntastic config
 let g:syntastic_python_checkers=['pylama']"
 
 " neocompl config
-let g:neocomplcache_enable_at_startup = 1
-let g:neocomplcache_enable_at_startup=1
-let g:neocomplcache_enable_auto_delimiter=1
-let g:neocomplcache_enable_camel_case_completion=1
-let g:neocomplcache_enable_underbar_completion=1
-
-let g:snips_author='Xiao-Ou Zhang'
-let g:snips_email='kepbod@gmail.com'
-let g:snips_github='https://github.com/kepbod'
+"let g:neocomplcache_enable_at_startup=1
+"let g:neocomplcache_enable_at_startup=1
+"let g:neocomplcache_enable_auto_delimiter=1
+"let g:neocomplcache_enable_camel_case_completion=1
+"let g:neocomplcache_enable_underbar_completion=1
 
 " Tell Neosnippet about the other snippets
-let g:neosnippet#snippets_directory="$HOME/.vim/bundle/vim-snippets/snippets"
-let g:neosnippet#enable_snipmate_compatibility=1
+"let g:neosnippet#snippets_directory="$HOME/.vim/bundle/vim-snippets/snippets"
+"let g:neosnippet#enable_snipmate_compatibility=1
 
 " Plugin key-mappings
-imap <C-K> <Plug>(neosnippet_expand_or_jump)
-smap <C-K> <Plug>(neosnippet_expand_or_jump)
-xmap <C-K> <Plug>(neosnippet_expand_target)
-
+"imap <C-K> <Plug>(neosnippet_expand_or_jump)
+"smap <C-K> <Plug>(neosnippet_expand_or_jump)
+"xmap <C-K> <Plug>(neosnippet_expand_target)
+"
 " Map <C-E> to cancel completion
-inoremap <expr><C-E> neocomplcache#cancel_popup()
+"inoremap <expr><C-E> neocomplcache#cancel_popup()
 
 " SuperTab like snippets behavior
-inoremap <expr><Tab> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-N>" : "\<Tab>"
-snoremap <expr><Tab> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<Tab>"
-inoremap <expr><S-Tab> pumvisible() ? "\<C-P>" : "\<S-Tab>"
+"inoremap <expr><Tab> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-N>" : "\<Tab>"
+"snoremap <expr><Tab> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<Tab>"
+"inoremap <expr><S-Tab> pumvisible() ? "\<C-P>" : "\<S-Tab>"
 
 " CR/S-CR: close popup and save indent
-inoremap <expr><CR> delimitMate#WithinEmptyPair() ? "\<C-R>=delimitMate#ExpandReturn()\<CR>" : pumvisible() ? neocomplcache#close_popup() : "\<CR>"
-inoremap <expr><S-CR> pumvisible() ? neocomplcache#close_popup() "\<CR>" : "\<CR>"
+"inoremap <expr><CR> delimitMate#WithinEmptyPair() ? "\<C-R>=delimitMate#ExpandReturn()\<CR>" : pumvisible() ? neocomplcache#close_popup() : "\<CR>"
+"inoremap <expr><S-CR> pumvisible() ? neocomplcache#close_popup() "\<CR>" : "\<CR>"
+
+" Use local vimrc if available
+if filereadable(expand("$HOME/.vimrc.local"))
+    source $HOME/.vimrc.local
+endif
+
+" Use local gvimrc if available and gui is running
+if has('gui_running')
+    if filereadable(expand("$HOME/.gvimrc.local"))
+        source $HOME/.gvimrc.local
+    endif
+endif

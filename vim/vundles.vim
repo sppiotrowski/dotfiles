@@ -41,29 +41,52 @@ Bundle "gmarik/vundle"
 "Bundle "tpope/vim-haml"
 "Bundle "wavded/vim-stylus"
 
-" Git related...
-"Bundle "gregsexton/gitv"
-"Bundle "mattn/gist-vim"
-"Bundle "skwp/vim-git-grep-rails-partial"
-Bundle "tjennings/git-grep-vim"
-"Bundle "tpope/vim-fugitive"
-"Bundle "tpope/vim-git"
+" --> Git related...
+if executable('git')
+    "Bundle "gregsexton/gitv"
+    "Bundle "mattn/gist-vim"
+    "Bundle "skwp/vim-git-grep-rails-partial"
+    Bundle "tjennings/git-grep-vim"
 
-" General text editing improvements...
+    " Git wrapper
+    "Bundle "tpope/vim-fugitive"
+
+    "Bundle "tpope/vim-git"
+endif
+
+" --> General text editing improvements...
+
+" Switch between a single-line statement and a multi-line one
 Bundle "AndrewRadev/splitjoin.vim"
+"
+" Provides automatic closing of quotes, parenthesis, brackets, etc.
 Bundle "Raimondi/delimitMate"
+
+" Performs keyword completion by maintaining a cache of keywords
 Bundle "Shougo/neocomplcache.git"
+
 Bundle "briandoll/change-inside-surroundings.vim.git"
 Bundle "garbas/vim-snipmate.git"
+
+" Line up text easily
 Bundle "godlygeek/tabular"
 Bundle "honza/vim-snippets"
 Bundle "nelstrom/vim-visual-star-search"
+
+" Provide a much simpler way to use some motions in Vim
 "Bundle "skwp/vim-easymotion"
+
 Bundle "tomtom/tcomment_vim.git"
 Bundle "tpope/vim-bundler"
 Bundle "vim-scripts/IndexedSearch"
-"Bundle "vim-scripts/camelcasemotion.git"
+
+" Refine words motion in Vim
+Bundle "vim-scripts/camelcasemotion.git"
+
+" Extend matching with "%"
 Bundle "vim-scripts/matchit.zip.git"
+
+" Provide Sublime Text's awesome multiple selection feature to vim
 Bundle "terryma/vim-multiple-cursors"
 
 " General vim improvements
@@ -71,21 +94,43 @@ Bundle "MarcWeber/vim-addon-mw-utils.git"
 Bundle "bogado/file-line.git"
 "Bundle "jistr/vim-nerdtree-tabs.git"
 Bundle "kien/ctrlp.vim"
-Bundle "majutsushi/tagbar.git"
+
+if executable('ctags')
+    " Browse the tags of source code files
+    Bundle "majutsushi/tagbar.git"
+    " Automated tag generation and syntax highlighting in Vim
+    Bundle "xolox/vim-easytags"
+endif
+
 "Bundle "mattn/webapi-vim.git"
-Bundle "rking/ag.vim"
+
+" A front for ag, A.K.A. the_silver_searcher
+if executable('ag')
+    Bundle "rking/ag.vim"
+endif
+
+" Explore filesystem and to open files and directories
 Bundle "scrooloose/nerdtree.git"
+
+" Syntax check that runs files through external syntax checkers
 Bundle "scrooloose/syntastic.git"
+
+" Visualize Vim undo tree
 Bundle "sjl/gundo.vim"
+
 "Bundle "skwp/YankRing.vim"
 Bundle "skwp/greplace.vim"
 Bundle "skwp/vim-conque"
 Bundle "tomtom/tlib_vim.git"
+
+" Search for, substitute, and abbreviate multiple variants of a word
 Bundle "tpope/vim-abolish"
 Bundle "tpope/vim-endwise.git"
 "Bundle "tpope/vim-ragtag"
 Bundle "tpope/vim-repeat.git"
 Bundle "tpope/vim-surround.git"
+
+" Complementary pairs of mappings
 Bundle "tpope/vim-unimpaired"
 Bundle "vim-scripts/AnsiEsc.vim.git"
 Bundle "vim-scripts/AutoTag.git"
@@ -97,8 +142,10 @@ Bundle "terryma/vim-multiple-cursors"
 "Bundle "xolox/vim-misc"
 "Bundle "xolox/vim-session"
 
-"" Text objects
+" --> Text objects
+" Text objects based on indent levels
 Bundle "austintaylor/vim-indentobject"
+
 "Bundle "bootleq/vim-textobj-rubysymbol"
 Bundle "coderifous/textobj-word-column.vim"
 Bundle "kana/vim-textobj-datetime"
@@ -106,6 +153,8 @@ Bundle "kana/vim-textobj-entire"
 Bundle "kana/vim-textobj-function"
 Bundle "kana/vim-textobj-user"
 "Bundle "lucapette/vim-textobj-underscore"
+
+" Visually display indent levels in Vim
 Bundle "nathanaelkane/vim-indent-guides"
 "Bundle "nelstrom/vim-textobj-rubyblock"
 "Bundle "thinca/vim-textobj-function-javascript"
@@ -117,6 +166,36 @@ Bundle "skwp/vim-colors-solarized"
 Bundle "bling/vim-airline.git"
 Bundle "vim-scripts/TagHighlight.git"
 Bundle "bogado/file-line.git"
+
+" --> New, to check
+" Provide many different commenting operations and styles
+"Bundle "scrooloose/nerdcommenter"
+
+
+" Compile or run a single source file without leaving Vim
+"Bundle "xuhdev/SingleCompile"
+
+" Focus on a region and making the rest inaccessible
+" Bundle "chrisbra/NrrwRgn"
+
+" Search and display information from arbitrary sources
+"Bundle "Shougo/unite.git"
+
+" Easily interact with tmux from vim
+"Bundle "benmills/vimux"
+
+" Make operating on columns of code conceptually simpler and reduces keystrokes
+"Bundle "coderifous/textobj-word-column.vim"
+
+" Provide your Vim's buffer with the outline view
+"Bundle "h1mesuke/unite-outline"
+
+" Manage windows more convenient
+"Bundle "zhaocai/GoldenView.Vim"
+
+" Show a git diff in the 'gutter' (sign column).
+"Bundle "airblade/vim-gitgutter"
+
 
 "Filetype plugin indent on is required by vundle
 filetype plugin indent on
