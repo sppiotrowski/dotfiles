@@ -95,6 +95,9 @@ Bundle "bogado/file-line.git"
 "Bundle "jistr/vim-nerdtree-tabs.git"
 Bundle "kien/ctrlp.vim"
 
+" Lern by hard how to use vim movements
+Bundle "wikitopian/hardmode"
+
 if executable('ctags')
     " Browse the tags of source code files
     Bundle "majutsushi/tagbar.git"
@@ -195,6 +198,7 @@ Bundle "bogado/file-line.git"
 
 " Show a git diff in the 'gutter' (sign column).
 "Bundle "airblade/vim-gitgutter"
+
 
 
 "Filetype plugin indent on is required by vundle

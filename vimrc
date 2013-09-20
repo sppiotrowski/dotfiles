@@ -168,10 +168,19 @@ if has('gui_running')
     endif
 endif
 
-" ================= new, to check"
 " Set title
-"set title
-"set titlestring=%t%(\ %M%)%(\ (%{expand(\"%:p:h\")})%)%(\ %a%)\ -\ %{v:servername}
+set title
+set titlestring=%t%(\ %M%)%(\ (%{expand(\"%:p:h\")})%)%(\ %a%)\ -\ %{v:servername}
+
+" ===================== Plugins ====================
+" Plugin: hardmode
+" * enable for default
+autocmd VimEnter,BufNewFile,BufReadPost * silent! call HardMode()
+" * toogle
+nnoremap <leader>h <Esc>:call ToggleHardMode()<CR>
+
+
+" ================= new, to check"
 
 " syntastic config
 let g:syntastic_python_checkers=['pylama']"
