@@ -174,12 +174,21 @@ set titlestring=%t%(\ %M%)%(\ (%{expand(\"%:p:h\")})%)%(\ %a%)\ -\ %{v:servernam
 
 " ===================== Plugins ====================
 " Plugin: hardmode
-" * enable for default
+" * enable for default and set toogling
 autocmd VimEnter,BufNewFile,BufReadPost * silent! call HardMode()
-" * toogle
 nnoremap <leader>h <Esc>:call ToggleHardMode()<CR>
 
 
+" Plugin: Tagbar
+nnoremap <Leader>t :TagbarToggle<CR>
+let g:tagbar_autofocus=1
+let g:tagbar_expand=1
+let g:tagbar_foldlevel=2
+let g:tagbar_ironchars=['▾', '▸']
+let g:tagbar_autoshowtag=1
+
+" Plugin: 
+"
 " ================= new, to check"
 
 " syntastic config
