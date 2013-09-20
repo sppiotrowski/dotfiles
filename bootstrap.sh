@@ -39,6 +39,9 @@ function install_vim() {
 
     # fonts for powerline
     cp ${SPP_HOME}/fonts/* ${HOME}/Library/Fonts
+
+    # install plugins via vundle
+    vim --noplugin -u vim/vundles.vim -N "+set hidden" "+syntax on" +BundleClean! +BundleInstall +qall
 }
 
 
