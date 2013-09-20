@@ -92,7 +92,6 @@ Bundle "terryma/vim-multiple-cursors"
 " General vim improvements
 Bundle "MarcWeber/vim-addon-mw-utils.git"
 Bundle "bogado/file-line.git"
-"Bundle "jistr/vim-nerdtree-tabs.git"
 Bundle "kien/ctrlp.vim"
 
 " Lern by hard how to use vim movements
@@ -114,6 +113,7 @@ endif
 
 " Explore filesystem and to open files and directories
 Bundle "scrooloose/nerdtree.git"
+Bundle "jistr/vim-nerdtree-tabs.git"
 
 " Syntax check that runs files through external syntax checkers
 Bundle "scrooloose/syntastic.git"

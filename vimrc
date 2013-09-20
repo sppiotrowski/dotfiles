@@ -173,11 +173,12 @@ set title
 set titlestring=%t%(\ %M%)%(\ (%{expand(\"%:p:h\")})%)%(\ %a%)\ -\ %{v:servername}
 
 " ===================== Plugins ====================
+
 " Plugin: hardmode
 " * enable for default and set toogling
+
 autocmd VimEnter,BufNewFile,BufReadPost * silent! call HardMode()
 nnoremap <leader>h <Esc>:call ToggleHardMode()<CR>
-
 
 " Plugin: Tagbar
 nnoremap <Leader>t :TagbarToggle<CR>
@@ -187,40 +188,144 @@ let g:tagbar_foldlevel=2
 let g:tagbar_ironchars=['▾', '▸']
 let g:tagbar_autoshowtag=1
 
-" Plugin: 
-"
-" ================= new, to check"
+" Plugin: NERD_tree
+nnoremap <Leader>d :NERDTreeTabsToggle<CR>
+nnoremap <Leader>f :NERDTreeFind<CR>
+let NERDTreeChDirMode=2
+let NERDTreeShowBookmarks=1
+let NERDTreeShowHidden=1
+let NERDTreeShowLineNumbers=1
+let NERDTreeDirArrows=1
+let g:nerdtree_tabs_open_on_gui_startup=0
 
-" syntastic config
+" Plugin: NERD_commenter
+let NERDCommentWholeLinesInVMode=2
+let NERDSpaceDelims=1
+let NERDRemoveExtraSpaces=1
+
+" Plugin: syntastic
 let g:syntastic_python_checkers=['pylama']"
 
-" neocompl config
-"let g:neocomplcache_enable_at_startup=1
-"let g:neocomplcache_enable_at_startup=1
-"let g:neocomplcache_enable_auto_delimiter=1
-"let g:neocomplcache_enable_camel_case_completion=1
-"let g:neocomplcache_enable_underbar_completion=1
+" Plugin: Neocomplchache
+let g:neocomplcache_enable_at_startup=1
+let g:neocomplcache_enable_at_startup=1
+let g:neocomplcache_enable_auto_delimiter=1
+let g:neocomplcache_enable_camel_case_completion=1
+let g:neocomplcache_enable_underbar_completion=1
 
 " Tell Neosnippet about the other snippets
-"let g:neosnippet#snippets_directory="$HOME/.vim/bundle/vim-snippets/snippets"
-"let g:neosnippet#enable_snipmate_compatibility=1
+let g:neosnippet#snippets_directory="$HOME/.vim/bundle/vim-snippets/snippets"
+let g:neosnippet#enable_snipmate_compatibility=1
 
-" Plugin key-mappings
-"imap <C-K> <Plug>(neosnippet_expand_or_jump)
-"smap <C-K> <Plug>(neosnippet_expand_or_jump)
-"xmap <C-K> <Plug>(neosnippet_expand_target)
-"
+" plugin key-mappings
+imap <C-K> <Plug>(neosnippet_expand_or_jump)
+smap <C-K> <Plug>(neosnippet_expand_or_jump)
+xmap <C-K> <Plug>(neosnippet_expand_target)
+
 " Map <C-E> to cancel completion
-"inoremap <expr><C-E> neocomplcache#cancel_popup()
+inoremap <expr><C-E> neocomplcache#cancel_popup()
 
 " SuperTab like snippets behavior
-"inoremap <expr><Tab> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-N>" : "\<Tab>"
-"snoremap <expr><Tab> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<Tab>"
-"inoremap <expr><S-Tab> pumvisible() ? "\<C-P>" : "\<S-Tab>"
+inoremap <expr><Tab> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-N>" : "\<Tab>"
+snoremap <expr><Tab> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<Tab>"
+inoremap <expr><S-Tab> pumvisible() ? "\<C-P>" : "\<S-Tab>"
 
 " CR/S-CR: close popup and save indent
-"inoremap <expr><CR> delimitMate#WithinEmptyPair() ? "\<C-R>=delimitMate#ExpandReturn()\<CR>" : pumvisible() ? neocomplcache#close_popup() : "\<CR>"
-"inoremap <expr><S-CR> pumvisible() ? neocomplcache#close_popup() "\<CR>" : "\<CR>"
+inoremap <expr><CR> delimitMate#WithinEmptyPair() ? "\<C-R>=delimitMate#ExpandReturn()\<CR>" : pumvisible() ? neocomplcache#close_popup() : "\<CR>"
+inoremap <expr><S-CR> pumvisible() ? neocomplcache#close_popup() "\<CR>" : "\<CR>"
+
+"Plugin: delimitMate
+let delimitMate_expand_cr=1
+let delimitMate_expand_space=1
+let delimitMate_balance_matchpairs=1
+
+"Plugin: Ag(Ack)
+if executable('ag')
+    nnoremap <Leader>a :Ag<Space>
+endif
+
+"Plugin: Syntastic
+nnoremap <Leader>s :Errors<CR>
+let g:syntastic_check_on_open=1
+let g:syntastic_auto_jump=1
+let g:syntastic_stl_format='[%E{Err: %fe #%e}%B{, }%W{Warn: %fw #%w}]'
+
+"Plugin: fugitive
+if executable('git')
+    nnoremap <silent> <leader>gs :Gstatus<CR>
+    nnoremap <silent> <leader>gd :Gdiff<CR>
+    nnoremap <silent> <leader>gc :Gcommit<CR>
+    nnoremap <silent> <leader>gb :Gblame<CR>
+    nnoremap <silent> <leader>gl :Glog<CR>
+    nnoremap <silent> <leader>gp :Git push<CR>
+endif
+
+"Plugin: Gundo(Undotree)
+if has('python')
+    nnoremap <Leader>u :GundoToggle<CR>
+endif
+
+"Plugin: EasyTags
+function! InitializeTagDirectory()
+    let parent=$HOME
+    let prefix='.vim'
+    let dirname='tags'
+    let directory=parent.'/'.prefix.'/'.dirname.'/'
+    if !isdirectory(directory)
+        if exists('*mkdir')
+            call mkdir(directory)
+            let g:easytags_by_filetype=directory
+        else
+            echo "Warning: Unable to create directory: ".directory
+            echo "Try: mkdir -p ".directory
+        endif
+    else
+        let g:easytags_by_filetype=directory
+    endif
+endfunction
+call InitializeTagDirectory()
+let g:easytags_python_enabled=1
+let g:easytags_include_members=1
+highlight cMember gui=italic
+
+"Plugin: SingleCompile
+nnoremap <Leader>r :SingleCompileRun<CR>
+let g:SingleCompile_showquickfixiferror=1
+
+"Plugin: GoldenView
+let g:goldenview__enable_default_mapping=0
+nmap <silent> <C-O> <Plug>GoldenViewSplit
+nmap <silent> <C-G> <Plug>GoldenViewSwitchToggle
+nmap <silent> <C-H> <Plug>GoldenViewNext
+nmap <silent> <C-L> <Plug>GoldenViewPrevious
+
+"Plugin: Splitjoin
+let g:splitjoin_split_mapping = ',k'
+let g:splitjoin_join_mapping = ',j'
+let g:splitjoin_normalize_whitespace=1
+let g:splitjoin_align=1
+
+"Plugin: Unite
+let g:unite_enable_start_insert=1
+nnoremap <Leader>m :Unite<Space>
+nnoremap <C-P> :Unite file_rec<CR>
+
+"Plugin: vimux
+nnoremap <Leader>vp :VimuxPromptCommand<CR>
+vnoremap <Leader>vs "vy :call VimuxRunCommand(@v . "\n", 0)<CR>
+nnoremap <Leader>vx :VimuxClosePanes<CR>
+nnoremap <Leader>vq :VimuxCloseRunner<CR>
+nnoremap <Leader>vi :VimuxInspectRunner<CR>
+nnoremap <Leader>vl :VimuxRunLastCommand<CR>
+nnoremap <Leader>vc :VimuxClearRunnerHistory<CR>
+" Fix bug in ruby 1.9
+if has('ruby')
+    ruby << EOF
+class Object
+def flush; end unless Object.new.respond_to?(:flush)
+end
+EOF
+endif
 
 " Use local vimrc if available
 if filereadable(expand("$HOME/.vimrc.local"))
