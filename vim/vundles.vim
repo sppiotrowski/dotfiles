@@ -49,7 +49,7 @@ if executable('git')
     Bundle "tjennings/git-grep-vim"
 
     " Git wrapper
-    "Bundle "tpope/vim-fugitive"
+    Bundle "tpope/vim-fugitive"
 
     "Bundle "tpope/vim-git"
 endif
