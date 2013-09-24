@@ -73,6 +73,10 @@ Bundle "godlygeek/tabular"
 Bundle "honza/vim-snippets"
 Bundle "nelstrom/vim-visual-star-search"
 
+" Dynamic buffer switcher vim plugin - lusty jugler
+" Dynamic filesystem and buffer explorer - lusty explorer
+Bundle "sjbach/lusty"
+
 " Provide a much simpler way to use some motions in Vim
 "Bundle "skwp/vim-easymotion"
 
