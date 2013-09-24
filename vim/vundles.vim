@@ -136,6 +136,8 @@ Bundle "tpope/vim-surround.git"
 " Complementary pairs of mappings
 Bundle "tpope/vim-unimpaired"
 Bundle "vim-scripts/AnsiEsc.vim.git"
+
+" Updates entries in a tags file automatically when saving
 Bundle "vim-scripts/AutoTag.git"
 Bundle "vim-scripts/lastpos.vim"
 Bundle "vim-scripts/sudo.vim"
