@@ -161,6 +161,7 @@ Bundle "kana/vim-textobj-datetime"
 Bundle "kana/vim-textobj-entire"
 Bundle "kana/vim-textobj-function"
 Bundle "kana/vim-textobj-user"
+Bundle "michaeljsmith/vim-indent-object"
 "Bundle "lucapette/vim-textobj-underscore"
 
 " Visually display indent levels in Vim
