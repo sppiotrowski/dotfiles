@@ -176,6 +176,7 @@ Bundle "skwp/vim-colors-solarized"
 Bundle "bling/vim-airline.git"
 Bundle "vim-scripts/TagHighlight.git"
 Bundle "bogado/file-line.git"
+BUndle "klen/python-mode.git"
 
 " --> New, to check
 " Provide many different commenting operations and styles
