@@ -176,6 +176,7 @@ Bundle "skwp/vim-colors-solarized"
 Bundle "bling/vim-airline.git"
 Bundle "vim-scripts/TagHighlight.git"
 Bundle "bogado/file-line.git"
+Bundle "klen/rope-vim"
 
 " --> New, to check
 " Provide many different commenting operations and styles
