@@ -176,7 +176,11 @@ Bundle "skwp/vim-colors-solarized"
 Bundle "bling/vim-airline.git"
 Bundle "vim-scripts/TagHighlight.git"
 Bundle "bogado/file-line.git"
+" rope-vim requires: rope and ropemode
 Bundle "klen/rope-vim"
+" require autopep8
+Bundle "hhatto/autopep8"
+Bundle "hynek/vim-python-pep8-indent"
 
 " --> New, to check
 " Provide many different commenting operations and styles
