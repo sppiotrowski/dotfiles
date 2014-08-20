@@ -3,10 +3,9 @@
 set -u
 
 SPP_HOME=$HOME/.spp
-FORCE=
 
 function symlink() {
-    if [ -e $2 ] and [ -e $FORCE ]; then
+    if [ -e $2 ]; then
         echo "rm: $2"
         rm $2
     fi
