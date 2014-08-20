@@ -1,0 +1,10 @@
+" These bundles introduce new textobjects into vim,
+Bundle "austintaylor/vim-indentobject"
+Bundle "coderifous/textobj-word-column.vim"
+Bundle "kana/vim-textobj-datetime"
+Bundle "kana/vim-textobj-entire"
+Bundle "kana/vim-textobj-function"
+Bundle "kana/vim-textobj-user"
+Bundle "lucapette/vim-textobj-underscore"
+Bundle "nathanaelkane/vim-indent-guides"
+Bundle "vim-scripts/argtextobj.vim"

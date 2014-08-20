@@ -28,7 +28,8 @@ function clean() {
         rm $HOME/.tmux.conf
         rm $HOME/.local/share/applications/sqldeveloper.desktop
         rm $HOME/.local/share/applications/eclipse.desktop
-        rm -rf $HOME/.tmuxinator
+        rm $HOME/.tmuxinator
+        rm $HOME/.vim
     fi
 }
 
@@ -52,10 +53,10 @@ function setup_vim() {
 
     # setup vim env
     ln -s ${SPP_HOME}/vimrc ${HOME}/.vimrc
-    # ln -s ${SPP_HOME}/vim ${HOME}/.vim
+    ln -s ${SPP_HOME}/vim ${HOME}/.vim
 
     # install plugins via vundle
-    # vim --noplugin -u vim/vundles.vim -N "+set hidden" "+syntax on" +BundleClean! +BundleInstall +qall
+     vim --noplugin -u vim/vundles.vim -N "+set hidden" "+syntax on" +BundleClean! +BundleInstall +qall
 }
 
 function setup_tmux() {
