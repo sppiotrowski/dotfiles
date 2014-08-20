@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Terminal=false
+Name=SQLDeveloper
+Icon=/home/spi/dev/sqldeveloper/icon.png
+Exec=/home/spi/dev/sqldeveloper/sqldeveloper.sh

@@ -1,104 +1,102 @@
-#!/usr/bin/env bash -u
+#!/usr/bin/env bash
+
+set -u
 
 SPP_HOME=${HOME}/.spp
 
-ITERM_PLIST_PATH=${HOME}/Library/Preferences/com.googlecode.iterm2.plist
+function apt_install() {
+    if [ $(dpkg -l $1 | wc -l 2>/dev/null) == "0" ]; then
+        echo "installing: $1"
+        apt-get -yy install $1
+    fi
+}
 
-function install() {
-    if [ ! $(brew list | grep $1 2>/dev/null) ]; then
-        brew install $1
+function gem_install() {
+    if [ $(gem list $1 -i) == "false" ]; then
+        echo "installing: $1"
+        gem install $1
     fi
 }
 
 function clean() {
-    echo cleaning env...
+    echo cleaning env
     if [ $FORCE ]; then
-        echo you are using the force...
+        echo you are using the force
         rm -rf $SPP_HOME
-        rm ${HOME}/.vimrc ${HOME}/.vim ${HOME}/.tmux.conf ${HOME}/.gitconfig
-        /usr/libexec/PlistBuddy -c "Delete :'Custom Color Presets':'Solarized Light' dict" $ITERM_PLIST_PATH 2> /dev/null
-        /usr/libexec/PlistBuddy -c "Delete :'Custom Color Presets':'Solarized Dark' dict" $ITERM_PLIST_PATH 2> /dev/null
-        echo cleaned
+        rm $HOME/.vimrc
+        rm $HOME/.gitconfig
+        rm $HOME/.tmux.conf
+        rm $HOME/.local/share/applications/sqldeveloper.desktop
+        rm $HOME/.local/share/applications/eclipse.desktop
     fi
 }
 
-function install_vim() {
-    echo bootstraping env...
+function make_dirs() {
+    echo making dirs
 
     if [ -d "$SPP_HOME" ]; then
         echo Error: ~/.spp already exists
         exit 1
     fi
 
-    git clone https://github.com/sppiotrowski/dotfiles.git $SPP_HOME
-    git clone https://github.com/gmarik/vundle.git ${SPP_HOME}/vim/bundle/vundle
+    ln -s ~/dev/spp ~/.spp
+
+    # git clone https://github.com/sppiotrowski/dotfiles.git $SPP_HOME
+    # git clone https://github.com/gmarik/vundle.git ${SPP_HOME}/vim/bundle/vundle
+    ln -s $SPP_HOME/unity/eclipse.desktop $HOME/.local/share/applications/eclipse.desktop
+    ln -s $SPP_HOME/unity/sqldeveloper $HOME/.local/share/applications/sqldeveloper.desktop
+}
+
+function setup_vim() {
 
     # setup vim env
     ln -s ${SPP_HOME}/vimrc ${HOME}/.vimrc
-    ln -s ${SPP_HOME}/vim ${HOME}/.vim
-
-    # fonts for powerline
-    cp ${SPP_HOME}/fonts/* ${HOME}/Library/Fonts
+    # ln -s ${SPP_HOME}/vim ${HOME}/.vim
 
     # install plugins via vundle
-    vim --noplugin -u vim/vundles.vim -N "+set hidden" "+syntax on" +BundleClean! +BundleInstall +qall
+    # vim --noplugin -u vim/vundles.vim -N "+set hidden" "+syntax on" +BundleClean! +BundleInstall +qall
 }
 
+function setup_tmux() {
+    apt_install 'tmux'
+    ln -s ${SPP_HOME}/tmux.conf ${HOME}/.tmux.conf
 
-function install_tmux() {
-    install 'tmux'
-    ln -s ${SPP_HOME}/tmux/tmux.conf ${HOME}/.tmux.conf
+    gem_install tmuxinator
 }
 
-function install_git() {
-    install 'git'
-    ln -s ${SPP_HOME}/git/gitconfig ${HOME}/.gitconfig
-}
-
-function configure_iterm() {
-    cd $SPP_HOME
-
-    /usr/libexec/PlistBuddy -c "Add  :'Custom Color Presets':'Solarized Light' dict" $ITERM_PLIST_PATH
-    /usr/libexec/PlistBuddy -c "Merge 'iTerm2/Solarized Light.itermcolors' :'Custom Color Presets':'Solarized Light'" $ITERM_PLIST_PATH
-    /usr/libexec/PlistBuddy -c "Add :'Custom Color Presets':'Solarized Dark' dict" $ITERM_PLIST_PATH
-    /usr/libexec/PlistBuddy -c "Merge 'iTerm2/Solarized Dark.itermcolors' :'Custom Color Presets':'Solarized Dark'" $ITERM_PLIST_PATH
-
-    dark_scheme_path="iTerm2/Solarized Dark.itermcolors"
-    light_scheme_path="iTerm2/Solarized Light.itermcolors"
-    # TODO: should user be asked?
-    color_scheme_path=${dark_scheme_path}
-
-    colors=('Background Color' 'Bold Color' 'Cursor Color' 'Cursor Text Color' 'Foreground Color' 'Selected Text Color' 'Selection Color')
-    for c in $(seq 16); do
-        color=$((c-1))
-        colors+=("Ansi $color Color")
-    done
-    for color in "${colors[@]}"; do
-        /usr/libexec/PlistBuddy -c "Delete :'New Bookmarks':0:'${color}'" $ITERM_PLIST_PATH
-    done
-    /usr/libexec/PlistBuddy -c "Merge '${color_scheme_path}' :'New Bookmarks':0" $ITERM_PLIST_PATH
+function setup_git() {
+    apt_install 'git'
+    ln -s ${SPP_HOME}/gitconfig ${HOME}/.gitconfig
 }
 
 function show_usage() {
     echo usage: ./bootstrap.sh or ./bootstrap.sh -f for force installing
 }
 
-function install_all() {
-    install_vim
-    install_tmux
-    install_git
-    configure_iterm
+function setup_gdrive() {
+    add-apt-repository ppa:thefanclub/grive-tools
+    apt-get update
+
+    apt_install 'grive-tools'
+}
+
+function bootstrap() {
+    make_dirs
+    setup_vim
+    setup_tmux
+    setup_git
+    setup_gdrive
 }
 
 if [ ! $* ]; then
     FORCE=
-    clean && install_all
+    clean && bootstrap
 else
     while getopts hf flag; do
         case $flag in
             f)
                 FORCE=true
-                clean && install_all
+                clean && bootstrap
                 ;;
             h)
                 show_usage
@@ -109,3 +107,4 @@ else
         esac
     done
 fi
+
