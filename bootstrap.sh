@@ -44,7 +44,7 @@ function make_dirs() {
     ln -s ~/dev/spp ~/.spp
 
     # git clone https://github.com/sppiotrowski/dotfiles.git $SPP_HOME
-    # git clone https://github.com/gmarik/vundle.git ${SPP_HOME}/vim/bundle/vundle
+    git clone https://github.com/gmarik/vundle.git ${SPP_HOME}/vim/bundle/vundle
     ln -s $SPP_HOME/unity/eclipse.desktop $HOME/.local/share/applications/eclipse.desktop
     ln -s $SPP_HOME/unity/sqldeveloper $HOME/.local/share/applications/sqldeveloper.desktop
 }
@@ -77,8 +77,8 @@ function show_usage() {
 }
 
 function setup_gdrive() {
-    add-apt-repository ppa:thefanclub/grive-tools
-    apt-get update
+    # add-apt-repository ppa:thefanclub/grive-tools
+    # apt-get update
 
     apt_install 'grive-tools'
 }
