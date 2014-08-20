@@ -24,4 +24,4 @@ windows:
       panes:
         - vim
         - git fetch
-        - vim ~/Google\ Drive/TODO.md
+        - vim ~/gdrive/tng/TODO.md ~/gdrive/tng/current.times
