@@ -5,11 +5,11 @@ set -u
 SPP_HOME=$HOME/.spp
 
 function symlink() {
-    if [ -e $2 ]; then
+    if [ -L "$2" ]; then
         echo "rm: $2"
-        rm $2
+        rm "$2"
     fi
-    ln -s $1 $2
+    ln -s "$1" "$2"
 }
 
 function apt_install() {
@@ -27,39 +27,30 @@ function gem_install() {
 }
 
 function init_spp() {
-    echo "exec: $0"
+    echo "exec: $FUNCNAME"
 
-    if [ -d $SPP_HOME ]; then
-        cd $SPP_HOME && git pull
-    else
-        git clone https://github.com/sppiotrowski/dotfiles.git $SPP_HOME
-    fi
-
-    symlink ~/dev/spp ~/.spp
-
-    if [ ! -e $SPP_HOME/vim/bundle/vundle ]; then
-        git clone https://github.com/gmarik/vundle.git $SPP_HOME/vim/bundle/vundle
-    fi
-
+    [ -d $SPP_HOME ] && rm -rf $SPP_HOME
+    git clone https://github.com/sppiotrowski/dotfiles.git $SPP_HOME
+    git clone https://github.com/gmarik/vundle.git $SPP_HOME/vim/bundle/vundle
 }
 
 function setup_unity() {
-    echo "exec: $0"
+    echo "exec: $FUNCNAME"
     symlink $SPP_HOME/unity/eclipse.desktop $HOME/.local/share/applications/eclipse.desktop
     symlink $SPP_HOME/unity/sqldeveloper $HOME/.local/share/applications/sqldeveloper.desktop
 }
 
 function setup_vim() {
-    echo "exec: $0"
+    echo "exec: $FUNCNAME"
     symlink $SPP_HOME/vimrc $HOME/.vimrc
     symlink $SPP_HOME/vim $HOME/.vim
 
     # install plugins via vundle
-     vim --noplugin -u vim/vundles.vim -N "+set hidden" "+syntax on" +BundleClean! +BundleInstall +qall
+     vim --noplugin -u $SPP_HOME/vim/vundles.vim -N "+set hidden" "+syntax on" +BundleClean! +BundleInstall +qall
 }
 
 function setup_tmux() {
-    echo "exec: $0"
+    echo "exec: $FUNCNAME"
     apt_install tmux
     symlink $SPP_HOME/tmux/tmux.conf $HOME/.tmux.conf
 
@@ -68,7 +59,7 @@ function setup_tmux() {
 }
 
 function setup_git() {
-    echo "exec: $0"
+    echo "exec: $FUNCNAME"
     apt_install 'git'
     symlink $SPP_HOME/gitconfig $HOME/.gitconfig
 }
@@ -78,7 +69,7 @@ function show_usage() {
 }
 
 function setup_gdrive() {
-    echo "exec: $0"
+    echo "exec: $FUNCNAME"
     add-apt-repository ppa:thefanclub/grive-tools
     apt-get update
 
@@ -86,7 +77,6 @@ function setup_gdrive() {
 }
 
 function bootstrap() {
-    [ -n $FORCE ] && rm -rf $SPP_HOME
     init_spp
     setup_unity
     setup_vim
