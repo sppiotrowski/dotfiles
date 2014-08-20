@@ -28,6 +28,7 @@ function clean() {
         rm $HOME/.tmux.conf
         rm $HOME/.local/share/applications/sqldeveloper.desktop
         rm $HOME/.local/share/applications/eclipse.desktop
+        rm -rf $HOME/.tmuxinator
     fi
 }
 
@@ -59,9 +60,10 @@ function setup_vim() {
 
 function setup_tmux() {
     apt_install 'tmux'
-    ln -s ${SPP_HOME}/tmux.conf ${HOME}/.tmux.conf
+    ln -s ${SPP_HOME}/tmux/tmux.conf ${HOME}/.tmux.conf
 
     gem_install tmuxinator
+    ln -s $SPP_HOME/tmux/tmuxinator $HOME/.tmuxinator
 }
 
 function setup_git() {
