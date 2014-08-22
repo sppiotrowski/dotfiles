@@ -37,7 +37,7 @@ function init_spp() {
 function setup_unity() {
     echo "exec: $FUNCNAME"
     symlink $SPP_HOME/unity/eclipse.desktop $HOME/.local/share/applications/eclipse.desktop
-    symlink $SPP_HOME/unity/sqldeveloper $HOME/.local/share/applications/sqldeveloper.desktop
+    symlink $SPP_HOME/unity/sqldeveloper.desktop $HOME/.local/share/applications/sqldeveloper.desktop
 }
 
 function setup_vim() {
