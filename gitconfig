@@ -44,5 +44,6 @@
 [alias]
     s = status
     co = checkout
+    c = commit
 [credential]
 	helper = cache --timeout=3600

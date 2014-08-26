@@ -1,6 +1,5 @@
 # env vars
 
-
 PPIT_ROOT=/home/spi/dev/ppit
 SPP_HOME=/home/spi/.spp
 
@@ -16,22 +15,25 @@ export EDITOR=vim
 # alias .e.changed='cd ~/dev/ppit && vim $(git status --porcelain | awk "{print $2}")'
 
 # aliases for edit a configuration
-alias .e.bashrc="vim $SPP_HOME/bashrc"
-alias .s.bashrc=". $SPP_HOME/bashrc"
-alias .e.vimrc="vim $SPP_HOME/vimrc"
+alias .e.bashrc="vim $SPP_HOME/bash/bashrc"
+alias .s.bashrc=". $HOME/.bashrc"
+alias .e.vim="vim $SPP_HOME/vim/"
 
 # aliases for change a directory
 alias .cd="cd $PPIT_ROOT"
 alias .cd.database="cd $PPIT_ROOT/database"
 
 # aliases for invoke a project actions
-alias .p.build="cd $PPIT_ROOT/build_all && ./build.sh && cd - "
-alias .p.build.as="cd $PPIT_ROOT/build_all && ./buildAsOnly.sh && cd -"
+alias .b.all="cd $PPIT_ROOT/build_all && ./build.sh && cd - "
+alias .b.server="cd $PPIT_ROOT/build_all && ./buildAsOnly.sh && cd -"
+
+alias .t="cd $PPIT_ROOT/AcceptanceTests && ant integration-tests.run-single-test-class -DtestClass=$TEST_PATH"
 
 # aliases for virtual box actions
 alias .v.ssh="cd $PPIT_ROOT/devimage && ./sshx.sh"
 alias .v.up="cd $PPIT_ROOT/devimage && vagrant up"
 alias .v.sds="cd $PPIT_ROOT/devimage && ./sshx.sh './control.sh sds'"
+alias .v.deploy.precom="cd $PPIT_ROOT/devimage && ./sshx.sh './control.sh deploy precom'"
 
 alias .t="tree . -L 3"
 
