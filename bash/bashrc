@@ -11,6 +11,8 @@ export VAGRANT_USE_NO_NFS="true"
 export VAGRANT_DEBUG="true"
 export EDITOR=vim
 
+alias chrome='google-chrome'
+
 # git aliases
 # alias .e.changed='cd ~/dev/ppit && vim $(git status --porcelain | awk "{print $2}")'
 
@@ -24,7 +26,7 @@ alias .cd="cd $PPIT_ROOT"
 alias .cd.database="cd $PPIT_ROOT/database"
 
 # aliases for invoke a project actions
-alias .b.all="cd $PPIT_ROOT/build_all && ./build.sh && cd - "
+alias .b.all="cd $PPIT_ROOT/build_all && ./buildNoTests.sh; cd - " # TODO: use pushd/popd instandof cd
 alias .b.server="cd $PPIT_ROOT/build_all && ./buildAsOnly.sh && cd -"
 
 alias .t="cd $PPIT_ROOT/AcceptanceTests && ant integration-tests.run-single-test-class -DtestClass=$TEST_PATH"
