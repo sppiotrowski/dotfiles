@@ -2,16 +2,34 @@
 
 PPIT_ROOT=/home/spi/dev/ppit
 SPP_HOME=/home/spi/.spp
+ECLIPSE_WORKSPACE=/home/spi/workspace
 
 export PPIT_ROOT=$PPIT_ROOT
 export PPIT_CHECK_TEST_DB_CLEANUP=1
 
 export JAVA_HOME="/usr/lib/jvm/java-6-oracle"
 export VAGRANT_USE_NO_NFS="true"
-export VAGRANT_DEBUG="true"
+# export VAGRANT_DEBUG="true"
 export EDITOR=vim
 
-alias chrome='google-chrome'
+# open url with chrome browser
+function chrome() {
+    eval "google-chrome -app $1 &> /dev/null &"
+}
+
+# tng ppit jira ticket related stuff
+function .ppit.set() {
+    echo $1 >| ~/.ppit-jira-ticket
+}
+function .ppit() {
+    cat ~/.ppit-jira-ticket
+}
+function .ppit.copy {
+    .ppit | xclip -selection clipboard
+}
+
+alias .jira="chrome https://ppit.tngtech.com/jira/browse/ppit-$(.ppit)"
+
 
 # git aliases
 # alias .e.changed='cd ~/dev/ppit && vim $(git status --porcelain | awk "{print $2}")'
@@ -26,16 +44,26 @@ alias .cd="cd $PPIT_ROOT"
 alias .cd.database="cd $PPIT_ROOT/database"
 
 # aliases for invoke a project actions
-alias .b.all="cd $PPIT_ROOT/build_all && ./buildNoTests.sh; cd - " # TODO: use pushd/popd instandof cd
+alias .b.all="cd $PPIT_ROOT/build_all && ./build.sh; cd - " # TODO: use pushd/popd instandof cd
+alias .b.all.no_tests="cd $PPIT_ROOT/build_all && ./buildNoTests.sh; cd - " # TODO: use pushd/popd instandof cd
 alias .b.server="cd $PPIT_ROOT/build_all && ./buildAsOnly.sh && cd -"
 
-alias .t="cd $PPIT_ROOT/AcceptanceTests && ant integration-tests.run-single-test-class -DtestClass=$TEST_PATH"
+# alias .t="cd $PPIT_ROOT/AcceptanceTests && ant integration-tests.run-single-test-class -DtestClass=$TEST_PATH" # TODO: look for daniels script unittest.sh
+alias .p.clean.build="find $PPIT_ROOT -depth -type d -name ".ide-classes" -exec rm -rf {} \; && eclipse -nosplash -application org.eclipse.jdt.apt.core.aptBuild -data $ECLIPSE_WORKSPACE"
+alias .p.close=".v.suspend && tmux kill-window -t ppit"
+alias .p.open=".v.up && .b.all.no_tests && .p.clean.build && .v.sds"
+
 
 # aliases for virtual box actions
 alias .v.ssh="cd $PPIT_ROOT/devimage && ./sshx.sh"
 alias .v.up="cd $PPIT_ROOT/devimage && vagrant up"
+alias .v.suspend="cd $PPIT_ROOT/devimage && vagrant suspend"
 alias .v.sds="cd $PPIT_ROOT/devimage && ./sshx.sh './control.sh sds'"
+alias .v.sdas="cd $PPIT_ROOT/devimage && ./sshx.sh './control.sh sdas'"
+alias .v.clean.db="cd $PPIT_ROOT/devimage && ./sshx.sh './control.sh clean db'"
 alias .v.deploy.precom="cd $PPIT_ROOT/devimage && ./sshx.sh './control.sh deploy precom'"
+alias .v.deploy.all="cd $PPIT_ROOT/devimage && ./sshx.sh './control.sh deploy all'"
+alias .v.deploy.ppo="cd $PPIT_ROOT/devimage && ./sshx.sh './control.sh deploy ppo'"
 
 alias .t="tree . -L 3"
 
@@ -48,3 +76,5 @@ export PS1='$(__git_ps1) \W\$ '
 
 . $SPP_HOME/bash/git-completion.bash
 . /var/lib/gems/1.9.1/gems/tmuxinator-0.6.8/completion/tmuxinator.bash
+GRADLE_HOME=/opt/gradle-2.1
+export PATH=$PATH:$GRADLE_HOME/bin
