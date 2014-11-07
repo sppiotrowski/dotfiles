@@ -1,0 +1,6 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =4
+let g:netrw_dirhist_1='/home/spi/.tmuxinator'
+let g:netrw_dirhist_2='/home/spi/Google Drive/tng'
+let g:netrw_dirhist_3='/home/spi/dev/ppit/scripts/ct_environment_setup/pack_dump'
+let g:netrw_dirhist_4='/home/spi/dev/tools/jenkins/jenkins_config/static/extranet/Configure_ICT_Environment'

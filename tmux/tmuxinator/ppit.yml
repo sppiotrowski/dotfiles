@@ -22,6 +22,6 @@ windows:
   - editor:
       layout: 487a,255x66,0,0[255x42,0,0,21,255x23,0,43{187x23,0,43,22,67x23,188,43,23}]
       panes:
+        - $(. /home/spi/.spp/bash/bashrc && .greetings)
         - vim ~/gdrive/tng/TODO.md ~/gdrive/tng/vim-cheetsheet.md
-        - clear
         - vim ~/gdrive/tng/current.times
