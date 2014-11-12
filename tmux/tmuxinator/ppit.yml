@@ -24,4 +24,4 @@ windows:
       panes:
         - $(. /home/spi/.spp/bash/bashrc && .greetings)
         - vim ~/gdrive/tng/TODO.md ~/gdrive/tng/vim-cheetsheet.md
-        - vim ~/gdrive/tng/current.times
+        - vim ~/gdrive/tng/*.times
