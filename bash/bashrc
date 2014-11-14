@@ -6,97 +6,33 @@ export ORACLE_HOME=/usr/lib/oracle/11.2/client64
 export LD_LIBRARY_PATH=$ORACLE_HOME/lib
 
 PPIT_ROOT=/home/spi/dev/ppit
-SPP_HOME=/home/spi/.spp
-ECLIPSE_WORKSPACE=/home/spi/workspace
-JIRA_TICKET_PATH="$HOME/.jira_ticket"
-
-export PPIT_ROOT=$PPIT_ROOT
+export SPP_HOME=/home/spi/.spp
+export ECLIPSE_WORKSPACE=/home/spi/workspace
 export PPIT_CHECK_TEST_DB_CLEANUP=1
-
 export JAVA_HOME="/usr/lib/jvm/java-6-oracle"
 export VAGRANT_USE_NO_NFS="true"
-# export VAGRANT_DEBUG="true"
 export EDITOR=vim
+export BROWSER=google-chrome
+# export VAGRANT_DEBUG="true"
 
-# open url with chrome browser
-function chrome() {
-    eval "nohup google-chrome -app $1 &> /dev/null &"
-}
+. $SPP_HOME/gee/src/gee.sh
 
-# tng ppit jira ticket related stuff
-function .jiraTicket() {
-    ticket=$1
-    echo "PPIT-${ticket}" >| "$JIRA_TICKET_PATH"
-}
-
-function .jira() {
-    ppit_key=${1:-$(cat $JIRA_TICKET_PATH)}
-    chrome https://ppit.tngtech.com/jira/browse/$ppit_key
-}
-
-# display ticket id and put it into clipboard for future usage
-function .jiraShow() {
-    cat "$JIRA_TICKET_PATH" | tee /dev/tty | xclip -selection clipboard
-}
-
-# commit current task with a provided message
-function .gitCommit() {
-    message="$*"
-    cmd="git commit -m \"$(cat $JIRA_TICKET_PATH) $message\""
-    read -p "commit: $cmd [Y/n] " yn
-    case $yn in
-        [Nn]* ) return;;
-        * ) eval $cmd; return;;
-    esac
-}
-
-
-function .confluence() {
-    chrome https://ppit.tngtech.com/confluence
-}
-
-function .greetings() {
-   git fetch && git diff FETCH_HEAD --exit-code --name-only
-   sed "$(shuf -i 3-477 -n 1)q;d" /usr/share/calendar/calendar.history
-}
-
-function .buildChanged() {
-    cd $PPIT_ROOT
-    for project in $(git status --porcelain | awk '{ print $2 }' | awk -F\/ '{print $1}'); do
-        cd "$PPIT_ROOT/$project" && ant
-    done
-}
-
-function .gitgrep() {
-    cmd="git grep -i \"$*\" -- *.java"
-    eval $cmd
-}
-
-function .gitgrepTest() {
-    cmd="git grep -i \"$*\" -- *Test.java"
-    eval $cmd
-}
-
-function .gitgrepAll() {
-    cmd="git grep -i \"$*\""
-    eval $cmd
-}
-
-function .task() {
-    ticket=$1
-    cmd="git checkout -b PPIT-$ticket"
-}
-
-alias .review="chrome /home/spi/dev/review/index.html"
-
-
-# alias checkstyle="checkstyle -c ~/.checkstyle/tng_checks.xml"
-alias pmd="/home/spi/dev/utils/pmd-bin-5.1.3/bin/run.sh pmd"
-alias cpd="/home/spi/dev/utils/pmd-bin-5.1.3/bin/run.sh cpd"
-
-
-# git aliases
-# alias .e.changed='cd ~/dev/ppit && vim $(git status --porcelain | awk "{print $2}")'
+# # commit current task with a provided message
+# function .gitCommit() {
+#     message="$*"
+#     cmd="git commit -m \"$(cat $JIRA_TICKET_PATH) $message\""
+#     read -p "commit: $cmd [Y/n] " yn
+#     case $yn in
+#         [Nn]* ) return;;
+#         * ) eval $cmd; return;;
+#     esac
+# }
+ alias .review="chrome /home/spi/dev/review/index.html"
+# 
+# 
+# # alias checkstyle="checkstyle -c ~/.checkstyle/tng_checks.xml"
+# alias pmd="/home/spi/dev/utils/pmd-bin-5.1.3/bin/run.sh pmd"
+# alias cpd="/home/spi/dev/utils/pmd-bin-5.1.3/bin/run.sh cpd"
 
 # aliases for edit a configuration
 alias .bashrcEdit="vim $SPP_HOME/bash/bashrc"
@@ -107,38 +43,14 @@ alias .vimEdit="vim $SPP_HOME/vim/"
 alias .cd="cd $PPIT_ROOT"
 alias .cd.database="cd $PPIT_ROOT/database"
 
-# aliases for invoke a project actions
-alias .buildAll="cd $PPIT_ROOT/build_all && ./build.sh; cd - " # TODO: use pushd/popd instandof cd
-alias .buildAllNoTests="cd $PPIT_ROOT/build_all && ./buildNoTests.sh; cd - " # TODO: use pushd/popd instandof cd
-alias .buildServer="cd $PPIT_ROOT/build_all && ./buildAsOnly.sh && cd -"
-
-# alias .t="cd $PPIT_ROOT/AcceptanceTests && ant integration-tests.run-single-test-class -DtestClass=$TEST_PATH" # TODO: look for daniels script unittest.sh
-alias .p.clean.build="find $PPIT_ROOT -depth -type d -name ".ide-classes" -exec rm -rf {} \; && eclipse -nosplash -application org.eclipse.jdt.apt.core.aptBuild -data $ECLIPSE_WORKSPACE"
-alias .p.close=".v.suspend && tmux kill-window -t ppit"
-alias .p.open=".v.up && .b.all.no_tests && .p.clean.build && .v.sds"
-
-
-# aliases for virtual box actions
-alias .v.ssh="cd $PPIT_ROOT/devimage && ./sshx.sh"
-alias .v.up="cd $PPIT_ROOT/devimage && vagrant up"
-alias .v.suspend="cd $PPIT_ROOT/devimage && vagrant suspend"
-alias .v.sds="cd $PPIT_ROOT/devimage && ./sshx.sh './control.sh sds'"
-alias .v.sdas="cd $PPIT_ROOT/devimage && ./sshx.sh './control.sh sdas'"
-alias .v.clean.db="cd $PPIT_ROOT/devimage && ./sshx.sh './control.sh clean db'"
-alias .v.deploy.precom="cd $PPIT_ROOT/devimage && ./sshx.sh './control.sh deploy precom'"
-alias .v.deploy.all="cd $PPIT_ROOT/devimage && ./sshx.sh './control.sh deploy all'"
-alias .v.deploy.ppo="cd $PPIT_ROOT/devimage && ./sshx.sh './control.sh deploy ppo'"
-alias .v.deploy.sm_all="cd $PPIT_ROOT/devimage && ./sshx.sh './control.sh deploy sm_all'"
-
-alias .t="tree . -L 3"
-
 # set -o vi
 alias xclip='xclip -selection clipboard'
 
 # show git current branch in a bash prompt
 export PS1='$(__git_ps1) \W\$ '
 
-. $SPP_HOME/bash/git-completion.bash
+#. $SPP_HOME/bash/git-completion.bash
 . /var/lib/gems/1.9.1/gems/tmuxinator-0.6.8/completion/tmuxinator.bash
-GRADLE_HOME=/opt/gradle-2.1
-export PATH=$PATH:$GRADLE_HOME/bin
+
+#GRADLE_HOME=/opt/gradle-2.1
+#export PATH=$PATH:$GRADLE_HOME/bin
