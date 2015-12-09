@@ -1,7 +1,0 @@
-[Desktop Entry]
-Type=Application
-Terminal=false
-Name=Eclipse
-Icon=/home/spi/dev/eclipse/icon.xpm
-Exec=/home/spi/dev/eclipse/eclipse
-StartupWMClass=Eclipse

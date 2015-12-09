@@ -1,7 +1,0 @@
-Bundle "rodjek/vim-puppet"
-Bundle "jtratner/vim-flavored-markdown.git"
-Bundle "scrooloose/syntastic"
-" Bundle "garbas/vim-snipmate.git"
-Bundle "nelstrom/vim-markdown-preview"
-" Bundle "honza/vim-snippets"
-Bundle "ingydotnet/yaml-vim"
