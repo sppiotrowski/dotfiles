@@ -8,6 +8,12 @@ I want to be as close to the wires as possible.
 * you can express your self as `cli` pipline
 * python -c 'import this'
 
-# naive solution
-... TBD
+# inconvenience / naive solution
+* how can I install & update my baby toolbox?
+    - # TODO: one of thouse can be used: Makefile, setup.py, docker image?
+    https://github.com/anishathalye/dotbot  # looks promissing
+
+* changing current directory to common one (i.e. git hub projects)
+  - provide modified 'cd' command to move easy
+  - use common prefix for each only command  to easy find it (i.e. '.cd')
 
