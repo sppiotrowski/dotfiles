@@ -1,14 +1,14 @@
-# rationale & goals & manifesto
+# Rationale, goals & manifesto
 I want to use powerful, proven and stable environment for my daily work.
 I prefer to use simple operations and compose them into bigger task over clicking cut icons.
 I want to be as close to the wires as possible.
 
-# assumptions
+# Assumptions
 * `bash` is almost every one server as well as `vim` and `python`
 * you can express your self as `cli` pipline
-* python -c 'import this'
+* `python -c 'import this'`
 
-# inconvenience / naive solution
+# Inconvenience & naive solution
 * how can I install & update my baby toolbox?
     - # TODO: one of thouse can be used: Makefile, setup.py, docker image?
     https://github.com/anishathalye/dotbot  # looks promissing
