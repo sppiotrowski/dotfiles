@@ -8,6 +8,9 @@ I want to be as close to the wires as possible.
 * you can express your self as `cli` pipline
 * `python -c 'import this'`
 
+# Tooling
+* `https://github.com/anishathalye/dotbot` for the `dotfiles` setup
+
 # Inconvenience & naive solution
 * how can I install & update my baby toolbox?
     - # TODO: one of thouse can be used: Makefile, setup.py, docker image?

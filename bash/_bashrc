@@ -1,0 +1,18 @@
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+shopt -s extglob
+shopt -s globstar
+shopt -s expand_aliases
+
+export EDITOR=vim
+
+alias .bashrc='. ~/.bashrc'
+alias .bashrc.edit='vim ~/proj/dotfiles/bash/_bashrc'
+
+. "$DIR"/utils.sh
+. "$DIR"/fun.sh
+. "$DIR"/url.sh
+. "$DIR"/tasks.sh
+. "$DIR"/arch.sh
+
+# vim: ts=8 et sw=4 sts=4 syntax=sh
