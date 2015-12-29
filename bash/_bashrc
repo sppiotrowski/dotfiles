@@ -5,9 +5,20 @@ shopt -s globstar
 shopt -s expand_aliases
 
 export EDITOR=vim
+export DOTFILES_HOME="$HOME/proj/dotfiles"
 
-alias .bashrc='. ~/.bashrc'
-alias .bashrc.edit='vim ~/proj/dotfiles/bash/_bashrc'
+alias .bashrc=". $HOME/.bashrc"
+
+.bashrc.edit() {
+    local BASH_MODULE="$1"
+    if [ -z "$BASH_MODULE" ]; then
+        vim "$DOTFILES_HOME"/bash/_bashrc
+    elif [ "$BASH_MODULE" == 'ls' ]; then
+        ls -A "$DOTFILES_HOME/bash/"
+    else
+        vim "$DOTFILES_HOME"/bash/"${BASH_MODULE}.sh"
+    fi
+}
 
 . "$DIR"/utils.sh
 . "$DIR"/fun.sh
