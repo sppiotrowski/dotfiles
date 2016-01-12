@@ -19,23 +19,26 @@ export DIARY_PATH="$HOME/diary.txt"
     vim "$TASK_PATH"
 }
 
+.task.exec() {
+    local LINE_NO="$1"
+    local CMD="sed -n $LINE_NOp $TASK_PATH"
+    if $(.confirm 'y' "$CMD"); then
+        eval "$CMD"
+    fi
+}
+
 .task.key() {
     KEY_PART="$1"
     if [ -z "$KEY_PART" ]; then
         # get a key of a last task
         grep -E 'TT-[0-9]+' $TASK_PATH | head -n 1 | sed -E 's/[# ]+//' | awk {' print $1 '}
-    else
-        # TODO: grep for given key
-        return 1
     fi
 }
-alias .tkey=.task.key
 
 .task.short() {
     # get a key and title  of a last task
     grep -E 'TT-[0-9]+' $TASK_PATH | head -n 1 | sed 's/^# //'
 }
-alias .tshort=.task.short
 
 .task.entire() {
     # get the entire last task 
@@ -43,7 +46,6 @@ alias .tshort=.task.short
     .std.error 'vader dying: nooooo...'
     return 1
 }
-alias .tentire=.task.entire
 
 .task.jira() {
     TASK_KEY=$(.task.key "$@")
@@ -65,4 +67,17 @@ alias .tjira=.task.jira
         echo "task notkfound: $TASK"
     fi
 }
-alias .tlast=.task.arch
+
+.task.git.commit() {
+    local MSG="$*"
+    local TASK="$(.task.key)"
+    if [ ! -z "$MSG" ]; then
+        local CMD="git commit -m '$TASK - $MSG'"
+    else
+        local CMD="git commit -m '$(.task.short)'"
+    fi
+
+    if $(.confirm 'y' "$CMD"); then
+        eval "$CMD"
+    fi
+}

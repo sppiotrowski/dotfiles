@@ -24,7 +24,7 @@ alias .bashrc=". $HOME/.bashrc"
 . "$DIR"/tools.sh
 . "$DIR"/fun.sh
 . "$DIR"/url.sh
-. "$DIR"/tasks.sh
+. "$DIR"/task.sh
 . "$DIR"/gdrive.sh
 . "$DIR"/arch.sh
 
