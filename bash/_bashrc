@@ -41,6 +41,5 @@ alias .bashrc=". $HOME/.bashrc"
 . "$DIR"/url.sh
 . "$DIR"/task.sh
 . "$DIR"/gdrive.sh
-. "$DIR"/arch.sh
 
 # vim: ts=8 et sw=4 sts=4 syntax=sh
