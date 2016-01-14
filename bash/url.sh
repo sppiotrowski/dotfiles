@@ -27,8 +27,8 @@ alias .translate=.url.translate
 }
 
 .url.daily() {
-    .url 'https://mail.google.com/mail/u/0/#inbox'
-    .url 'https://outfittery.slack.com/messages/theta-team'
+    .url 'https://mail.google.com/mail/u/0/#inbox' && \
+    .url 'https://outfittery.slack.com/messages/theta-team' && \
     .url 'https://www.facebook.com'
 
 }

@@ -5,18 +5,33 @@ shopt -s globstar
 shopt -s expand_aliases
 
 export EDITOR=vim
-export DOTFILES_HOME="$HOME/proj/dotfiles"
 
 alias .bashrc=". $HOME/.bashrc"
+
+.contain() {
+    local TO_FIND="$1"
+    shift
+    for ELEMENT in "$@"; do
+        echo "$ELEMENT == $TO_FIND"
+        [ "$ELEMENT" == "$TO_FIND" ] && return 0
+    done
+    return 1
+}
 
 .bashrc.edit() {
     local BASH_MODULE="$1"
     if [ -z "$BASH_MODULE" ]; then
-        cd "$DOTFILES_HOME"/bash && vim _bashrc
-    elif [ "$BASH_MODULE" == 'ls' ]; then
-        ls -A "$DOTFILES_HOME/bash/"
+        cd "$DIR" && $EDITOR _bashrc
+        return 0
+    fi
+
+    BASH_MODULE="${BASH_MODULE}.sh"
+
+    local BASH_MODULES=($(ls -A "$DIR"))
+    if .contain "${BASH_MODULE}" "${BASH_MODULES[@]}"; then
+        cd "$DIR" && "$EDITOR" "${BASH_MODULE}"
     else
-        cd "$DOTFILES_HOME"/bash && vim "${BASH_MODULE}.sh"
+        echo "'${BASH_MODULE}'"' not found, available: '"${BASH_MODULES[*]}"
     fi
 }
 

@@ -21,7 +21,7 @@ export DIARY_PATH="$HOME/diary.txt"
 
 .task.exec() {
     local LINE_NO="$1"
-    local CMD="sed -n $LINE_NOp $TASK_PATH"
+    local CMD="$(sed -n ${LINE_NO}p $TASK_PATH)"
     if $(.confirm 'y' "$CMD"); then
         eval "$CMD"
     fi
