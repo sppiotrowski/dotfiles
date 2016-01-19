@@ -19,13 +19,20 @@ export STATS_PATH="$HOME/stats.txt"
     esac
 }
 
-# TODO: apply stats for each one bash function
 .stats() {
+    # add information about sigle usage to 'stats' file
     # usage: .stats $FUNCNAME
     FUNC="$1"
-    # TODO: update existing
-    # http://stackoverflow.com/questions/2464760/modify-config-file-using-bash-script
-    echo "$FUNC" >> "$STATS_PATH"
+    if [ -n "$FUNC" ]; then
+        # add if not exist
+        if [ -z "$(grep "$FUNC" "$STATS_PATH")" ]; then
+            echo "${FUNC} 1" >> "$STATS_PATH"
+        else
+            sed -ri 's/^('"$FUNC"') ([0-9]+)/echo "\1 $((\2 + 1))"/ge' "$STATS_PATH"
+        fi
+    else
+        "$EDITOR" "$STATS_PATH"
+    fi
 
 }
 

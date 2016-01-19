@@ -3,10 +3,14 @@ export TASK_PATH="$HOME/task.txt"
 export DIARY_PATH="$HOME/diary.txt"
 
 .diary() {
+    .stats "$FUNCNAME"
+
     vim "$DIARY_PATH"
 }
 
 .todo() {
+    .stats "$FUNCNAME"
+
     TODO="$*"
     if [ -z "$TODO" ]; then
         vim "$TODO_PATH"
@@ -16,10 +20,14 @@ export DIARY_PATH="$HOME/diary.txt"
 }
 
 .task() {
+    .stats "$FUNCNAME"
+
     vim "$TASK_PATH"
 }
 
 .task.exec() {
+    .stats "$FUNCNAME"
+
     local LINE_NO="$1"
     local CMD="$(sed -n ${LINE_NO}p $TASK_PATH)"
     if $(.confirm 'y' "$CMD"); then
@@ -28,6 +36,8 @@ export DIARY_PATH="$HOME/diary.txt"
 }
 
 .task.key() {
+    .stats "$FUNCNAME"
+
     KEY_PART="$1"
     if [ -z "$KEY_PART" ]; then
         # get a key of a last task

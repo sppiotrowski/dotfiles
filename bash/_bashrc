@@ -12,7 +12,6 @@ alias .bashrc=". $HOME/.bashrc"
     local TO_FIND="$1"
     shift
     for ELEMENT in "$@"; do
-        echo "$ELEMENT == $TO_FIND"
         [ "$ELEMENT" == "$TO_FIND" ] && return 0
     done
     return 1
