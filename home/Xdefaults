@@ -1,0 +1,12 @@
+Xft.dpi:        96
+Xft.antialias:  true
+Xft.rgba:       rgb
+Xft.hinting:    true
+Xft.hintstyle:  hintfull
+
+URxvt.scrollBar: false
+URxvt.secondaryScroll: true
+
+! fonts
+URxvt*font: xft:Source Code Pro Medium:pixelsize=13
+URxvt*letterSpace: -1

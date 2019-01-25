@@ -52,8 +52,8 @@ set nobackup
 set nowb
 
 
-"set guifont=Menlo\ Regular:h14
-set guifont=Inconsolata:h18
+set guifont=Menlo\ Regular:h14
+"set guifont=Inconsolata:h18
 
 if has('gui_running')
     set rtp+=~/.vim/plugged/vim-two-firewatch
