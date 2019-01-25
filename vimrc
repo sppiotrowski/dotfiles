@@ -1,0 +1,149 @@
+" minimal config section
+set nocompatible
+
+filetype plugin indent on
+syntax on
+
+" support win files
+set nofixendofline
+
+" indentation
+set autoindent
+set tabstop=2
+set shiftwidth=2
+set expandtab
+set shiftround
+
+" keystrokes
+set backspace=eol,start,indent
+set showmode
+set showcmd
+
+" search (try)
+" set incsearch
+" set hlsearch
+
+" drawing
+"set ttyfast
+"set lazyredraw
+
+set autoread
+set hidden
+set history=1000
+set confirm
+set shell=bash
+set wildignore+=.pyc,.swp
+
+let mapleader = ","
+let g:mapleader = ","
+
+" saving
+nmap <leader>w :w!<cr>
+
+" :W sudo saves the file
+" command W w !sudo tee % > /dev/null
+
+
+" no backups
+" set dir=~/.cache/vim
+" set backupdir=~/.cache/vim
+set noswapfile
+set nobackup
+set nowb
+
+
+"set guifont=Menlo\ Regular:h14
+set guifont=Inconsolata:h18
+
+if has('gui_running')
+    set rtp+=~/.vim/plugged/vim-two-firewatch
+    set background=dark
+    colorscheme two-firewatch
+    let g:airline_theme='twofirewatch'
+    let g:two_firewatch_italics=1
+    set nosmd   " no showmode
+    set noru    " no ruler
+endif
+
+
+" vim-plug config
+call plug#begin('~/.vim/plugged')
+
+Plug 'pangloss/vim-javascript'
+Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
+Plug 'mhinz/vim-grepper'
+Plug 'scrooloose/nerdtree'
+Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'wikitopian/hardmode'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'altercation/vim-colors-solarized'
+
+" Experimental
+Plug 'rakr/vim-two-firewatch'
+" Plug 'inside/vim-search-pulse'
+Plug 'styled-components/vim-styled-components'
+Plug 'vim-scripts/vim-auto-save'
+
+" snippets
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+Plug 'epilande/vim-es2015-snippets'
+Plug 'epilande/vim-react-snippets'
+let g:UltiSnipsExpandTrigger="<C-l>"
+let g:UltiSnipsEditSplit="vertical"
+" let g:UltiSnipsJumpForwardTrigger="<c-b>"
+" let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" Plug 'cakebaker/scss-syntax.vim'
+" Plug 'jlanzarotta/bufexplorer'
+" Plug 'kana/vim-textobj-user' " try to read first
+
+" Plug 'kana/vim-textobj-function' " js - not working
+
+" eslint
+" npm install eslint --global
+Plug 'vim-syntastic/syntastic'
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_javascript_eslint_exe = '$(npm bin)/eslint'
+let g:syntastic_mode_map = { "mode": "active" }
+
+call plug#end()
+
+" Grepper
+nnoremap <leader>g :Grepper -tool git<cr>
+nmap gs <plug>(GrepperOperator)
+xmap gs <plug>(GrepperOperator)
+
+" Custom
+nnoremap <leader>x :w <bar>:silent !yarn build<cr>
+" nnoremap <leader>p :w <bar>:silent !prettier --single-quote --write %<cr>
+nnoremap <leader>p :w <bar>:silent !prettier --arrow-parens always --no-semi --single-quote --write %<cr>
+
+" NERDTree
+nnoremap <leader>n :NERDTreeToggle<cr>
+nnoremap <leader>r :NERDTreeFind<cr>
+
+" Hard Mode
+" autocmd VimEnter,BufNewFile,BufReadPost * silent! call HardMode()
+nnoremap <leader>h <Esc>:call ToggleHardMode()<CR>
+
+" Mózg rozjebany...
+:set incsearch
+" use quickfix as set of files
+" cex system('git diff HEAD^ --name-only')  
+
+" LeaderF
+let g:Lf_DefaultMode = 'FullPath'
+
