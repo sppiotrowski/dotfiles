@@ -24,8 +24,8 @@ set showcmd
 " set hlsearch
 
 " drawing
-"set ttyfast
-"set lazyredraw
+set ttyfast
+set lazyredraw
 
 set autoread
 set hidden
@@ -43,7 +43,6 @@ nmap <leader>w :w!<cr>
 " :W sudo saves the file
 " command W w !sudo tee % > /dev/null
 
-
 " no backups
 " set dir=~/.cache/vim
 " set backupdir=~/.cache/vim
@@ -52,8 +51,7 @@ set nobackup
 set nowb
 
 
-set guifont=Menlo\ Regular:h14
-"set guifont=Inconsolata:h18
+set guifont=Source\ Code\ Pro\ Medium\ 12
 
 if has('gui_running')
     set rtp+=~/.vim/plugged/vim-two-firewatch
@@ -120,6 +118,10 @@ let g:syntastic_javascript_eslint_exe = '$(npm bin)/eslint'
 let g:syntastic_mode_map = { "mode": "active" }
 
 call plug#end()
+set guioptions-=m  "remove menu bar
+set guioptions-=T  "remove toolbar
+set guioptions-=r  "remove right-hand scroll bar
+set guioptions-=L  "remove left-hand scroll bar
 
 " Grepper
 nnoremap <leader>g :Grepper -tool git<cr>

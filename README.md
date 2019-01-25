@@ -7,7 +7,6 @@ Prepare
 * unetbootin mini.iso => usbstick
 * boot macbook with ALT key pressed
 * install with [x] open-ssh server
-* see: _arch/_bash_history
 ```sh
 hostname -I  # get ip
 
