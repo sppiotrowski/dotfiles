@@ -56,5 +56,4 @@ setxkbmap -option caps:escape
 * maximize battery life
 sudo apt install powertop
 
-
-TODO: merge _bash_history && README.md
+see: history
