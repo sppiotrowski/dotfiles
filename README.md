@@ -77,3 +77,6 @@ see: history
 * setup backlight (dotfiles: bin/backlight)
 * setup sound (already in distro)
 alsamixer
+
+* setup ssh
+eval `ssh-agent -s` && ssh-add
