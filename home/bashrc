@@ -117,10 +117,11 @@ if ! shopt -oq posix; then
 fi
 
 export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).
+
 . "$HOME"/projects/dotfiles/cli/cli.sh
 
 # add $HOME/bin for custom scripts
-PATH=$PATH:~/bin
+PATH=$PATH:"$HOME"/projects/dotfiles/bin
 
 # remap capslock -> escape
 setxkbmap -option caps:escape

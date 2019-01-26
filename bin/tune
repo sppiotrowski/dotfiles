@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+if [ "$EUID" -ne 0 ]; then
+  echo 'not a sudoer...'
+  echo 'sudo clean'
+  exit 1
+fi
+
+# tip: ncdu - show disk usage
+# tip: powertop - show energy usage
+
+_checks() {
+  local cmd="$1"
+  local answer
+  read -r -e -p "run for ${cmd}? [Y/n] " answer
+  if [ -x "$(command -v "$cmd")" ] && [ ! "$answer" == 'n'  ]; then
+    echo '* clean:' "$cmd"
+    return 0
+  fi
+
+  echo '- skipped:' "$cmd"
+  return 1
+}
+
+# apt
+if _checks apt; then
+  apt autoremove
+  apt autoclean
+fi
+
+# docker
+if _checks docker; then
+  docker system prune -a --volumes 
+  service docker stop
+fi
+
+# power
+_checks powertop && powertop -c --auto-tune
+
+exit 0

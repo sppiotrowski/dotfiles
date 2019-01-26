@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+# tip: ncdu - show disk usage
+
+_checks() {
+  local cmd="$1"
+  local answer
+  read -r -e -p "run for ${cmd}? [Y/n] " answer
+  if [ -x "$(command -v "$cmd")" ] && [ ! "$answer" == 'n'  ]; then
+    echo '* clean:' "$cmd"
+    return 0
+  fi
+
+  echo '- skipped:' "$cmd"
+  return 1
+}
+
+# js/node
+if _checks node; then
+  n prune
+  npm cache clear --force
+  yarn cache clear
+  find ~/projects/ -maxdepth 2 -name 'node_modules' -exec rm -rf {} +
+fi

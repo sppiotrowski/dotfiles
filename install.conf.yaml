@@ -7,8 +7,7 @@
     - '~/bin'
     - '~/.config'
 - link:
-    ~/bin/.clean: bin/clean
-    ~/bin/.readme: README.md
+    ~/bin/.cleanup: bin/cleanup
     ~/bin/.backlight: bin/backlight
     ~/.bashrc: home/bashrc
     ~/.profile: home/profile
