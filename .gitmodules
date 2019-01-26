@@ -1,3 +1,6 @@
 [submodule "dotbot"]
 	path = dotbot
 	url = https://github.com/anishathalye/dotbot
+[submodule "cli"]
+	path = cli
+	url = git@github.com:sppiotrowski/cli.git

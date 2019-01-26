@@ -35,24 +35,45 @@ apt-get install network-manager
 # usage
 nmtui  # ncurses network-manager gui
 ```
-* setup window server/manager
-sudo apt install i3 xorg xserver-xorg mesa-utils mesa-utils-extra
-# TODO: apt install compton numlockx xautolock scrot iwcd
-# configure terminal emulator
-# configs in _arch: _xinitrc, _Xdefaults, _config/i3
+* setup vga drivers
+```sh
+sudo apt install mesa-utils mesa-utils-extra
 
-* terminal: xrvt
+# utils / info
+lspci -v | VGA
+glxifno | grep OpenGL
+glxgears -info  # test performance
+```
+* maximize battery life
+sudo apt install powertop
+
+* setup window server/manager
+sudo apt install i3 xorg xserver-xorg
+# TODO: apt install compton numlockx xautolock scrot iwcd
+
+* setup terminal: xrvt
 sudo apt install rxvt-unicode xclip
 open https://wiki.archlinux.org/index.php/rxvt-unicode
 xclip -o  # copy from console
 # copy/paste in rxvt: ctrl+alt+c ctrl+alt+v
 
-* remap caps-lock to escape
+* setup configs
+```sh
+mkdir -p ~/projects && cd $_
+git clone git@github.com:sppiotrowski/dotfiles.git
+cd dotfiles && ./install
+```
+* setup cli
+```sh
+mkdir -p ~/projects && cd $_
+git clone git@github.com:sppiotrowski/cli.git
+cd cli && make install
+```
+* remap caps-lock to escape (in: setup configs)
 ```sh
 setxkbmap -option caps:escape
 ```
-
-* maximize battery life
-sudo apt install powertop
-
 see: history
+* setup backlight (dotfiles: bin/backlight)
+* setup sound (already in distro)
+alsamixer
