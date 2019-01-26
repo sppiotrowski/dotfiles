@@ -4,8 +4,10 @@
   - [mkdir -p ~/.config]
 - clean:
     - '~'
+    - '~/bin'
+    - '~/.config'
 - link:
-    ~/bin/readme: README.md
+    ~/bin/.readme: README.md
     ~/bin/backlight: bin/backlight
     ~/.bashrc: home/bashrc
     ~/.profile: home/profile

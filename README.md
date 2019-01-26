@@ -1,3 +1,4 @@
+#! /usr/bin/env vim
 Macbook Pro 2011
 ================
 
