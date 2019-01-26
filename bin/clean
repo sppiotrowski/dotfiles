@@ -1,0 +1,21 @@
+# tip: ncdu - show disk usage
+_exists() {
+  local cmd="$1"
+  if [ -x "$(command -v $cmd)" ]; then
+    echo '* clean:' "$cmd"
+    return 0
+  fi
+  echo '- skipped:' "$cmd"
+  return 1
+}
+
+# apt
+if _exists apt; then
+  apt autoremove
+  apt autoclean
+fi
+
+# js/node
+_exists n && n prune
+
+exit 0
