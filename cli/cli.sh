@@ -15,6 +15,7 @@ SRC="$CLI_HOME/src"
 if [ "$OS" == 'linux' ]; then
   alias clip_copy='xclip -selection clipboard'
   alias clip_paste='xclip -o'
+  alias open='xdg-open'
 elif [ "$OS" == 'osx' ]; then
   alias clip_copy='pbcopy'
   alias clip_paste='pbpaste'
