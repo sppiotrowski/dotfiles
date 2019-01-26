@@ -33,10 +33,10 @@ fi
 
 .cli.backup() {
   cd "$DOTFILES" && \
-  echo "git add"
-  git add .
-  git commit -m "backup: $(.util.date)" 
-  git push origin master
+  local repo=$(.git.current) && \
+  git add . && \
+  git commit -m "backup: $(.util.date)" && \
+  git push origin "$repo"
 }
 
 .cli.todo() {
