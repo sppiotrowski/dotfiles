@@ -1,0 +1,1 @@
+(zcat ; cat /var/log/apt/history.log) 2>/dev/null |   egrep '^(Start-Date:|Commandline:)' |   grep -v aptdaemon |   egrep '^Commandline:'

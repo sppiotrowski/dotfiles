@@ -65,4 +65,5 @@ curl -L https://git.io/n-install | bash
  strace -f -t -o out.log npm i
  sudo npm i -g yarn
  sudo sysctl -w vm.swappiness=10
+ sudo apt install tree
 
