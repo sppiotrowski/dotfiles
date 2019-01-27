@@ -32,13 +32,12 @@ fi
 # shellcheck source=src/candidate.sh
 . "$SRC"/candidate.sh
 
-.cli.apthistory() {
+.cli.apt-history() {
   (zcat ; cat /var/log/apt/history.log) 2>/dev/null |   egrep '^(Start-Date:|Commandline:)' |   grep -v aptdaemon |   egrep '^Commandline:'
 }
 .cli.backup() {
   cd "$DOTFILES" && \
-  .cli.apthistory > apthistory && \
-  return 0
+  .cli.apthistory > apt-history && \
   local repo=$(.git.current) && \
   git add . && \
   git commit -m "backup: $(.util.date)" && \

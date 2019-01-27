@@ -1,0 +1,69 @@
+Commandline: apt-get -o APT::Status-Fd=4 -o APT::Keep-Fds::=5 -o APT::Keep-Fds::=6 -q -y --no-remove install initramfs-tools
+Commandline: apt-get -o APT::Status-Fd=4 -o APT::Keep-Fds::=5 -o APT::Keep-Fds::=6 -q -y --no-remove install linux-signed-generic
+Commandline: apt-get -o APT::Status-Fd=4 -o APT::Keep-Fds::=5 -o APT::Keep-Fds::=6 -q -y --no-remove install udev
+Commandline: apt-get -o APT::Status-Fd=4 -o APT::Keep-Fds::=5 -o APT::Keep-Fds::=6 -q -y --no-remove install pciutils
+Commandline: apt-get -o APT::Status-Fd=4 -o APT::Keep-Fds::=5 -o APT::Keep-Fds::=6 -q -y --no-remove install usbutils
+Commandline: apt-get -o APT::Status-Fd=4 -o APT::Keep-Fds::=5 -o APT::Keep-Fds::=6 -q -y --no-remove install e2fsprogs
+Commandline: apt-get -o APT::Status-Fd=4 -o APT::Keep-Fds::=5 -o APT::Keep-Fds::=6 -q -y install tasksel
+Commandline: apt-get -o APT::Status-Fd=4 -o APT::Keep-Fds::=5 -o APT::Keep-Fds::=6 -q --no-install-recommends -y -o DPkg::options=--force-confnew upgrade
+Commandline: apt-get -o APT::Status-Fd=4 -o APT::Keep-Fds::=5 -o APT::Keep-Fds::=6 -q -y --no-remove -o APT::Install-Recommends=false install installation-report
+Commandline: apt-get -o APT::Status-Fd=4 -o APT::Keep-Fds::=5 -o APT::Keep-Fds::=6 -q -y --no-remove install unattended-upgrades
+Commandline: apt-get -o APT::Status-Fd=4 -o APT::Keep-Fds::=5 -o APT::Keep-Fds::=6 -q -y --no-remove install language-selector-common
+Commandline: apt-get -o APT::Status-Fd=4 -o APT::Keep-Fds::=5 -o APT::Keep-Fds::=6 -o APT::Install-Recommends=false -q -y install language-pack-en
+Commandline: apt-get -o APT::Status-Fd=4 -o APT::Keep-Fds::=5 -o APT::Keep-Fds::=6 -q -y -o APT::Install-Recommends=true -o APT::Get::AutomaticRemove=true -o APT::Acquire::Retries=3 install minimal^ standard^ openssh-server^
+Commandline: apt-get -o APT::Status-Fd=4 -o APT::Keep-Fds::=5 -o APT::Keep-Fds::=6 -o APT::Install-Recommends=false -q -y install language-pack-gnome-en
+Commandline: apt-get -o APT::Status-Fd=4 -o APT::Keep-Fds::=5 -o APT::Keep-Fds::=6 -o APT::Install-Recommends=false -q -y install wamerican wbritish
+Commandline: apt-get -o APT::Status-Fd=4 -o APT::Keep-Fds::=5 -o APT::Keep-Fds::=6 -q -y --no-remove install grub-common
+Commandline: apt-get -o APT::Status-Fd=4 -o APT::Keep-Fds::=5 -o APT::Keep-Fds::=6 -q -y --no-remove install grub-efi-amd64-signed
+Commandline: apt-get -o APT::Status-Fd=4 -o APT::Keep-Fds::=5 -o APT::Keep-Fds::=6 -q -y --no-remove install shim-signed
+Commandline: apt install dump
+Commandline: apt install vim
+Commandline: apt remove dump
+Commandline: apt autoremove
+Commandline: apt remove dump
+Commandline: apt autoremove
+Commandline: apt install ubuntu-drivers-common
+Commandline: apt-get install -o DPkg::options::=--force-confnew -y bcmwl-kernel-source
+Commandline: apt-get install network-manager
+Commandline: apt install vim wget unzip
+Commandline: apt install i3 xorg xserver-xorg
+Commandline: apt install chromium-browser
+Commandline: apt install xterm
+Commandline: apt install rxvt-unicode
+Commandline: apt install mesa-utils mesa-utils-extra
+Commandline: apt install xfce4-terminal
+Commandline: apt remove xfce4-terminal
+Commandline: apt remove xterm
+Commandline: apt remove gnome-terminal
+Commandline: apt install xclip
+Commandline: apt install powertop
+Commandline: apt install tlp
+Commandline: apt remove tlp
+Commandline: apt install git
+Commandline: apt install autocutsel
+Commandline: apt remove autocutsel
+Commandline: apt autoremove
+Commandline: apt install vim-gtk
+Commandline: apt install software-properties-common
+Commandline: apt install curl
+Commandline: apt install ncdu
+Commandline: apt dist-upgrade
+Commandline: apt install nodejs
+Commandline: apt remove nodejs
+Commandline: apt autoremove
+Commandline: apt install atop
+Commandline: apt install iotop
+Commandline: apt install tlp
+Commandline: apt-get install python3-distutils
+Commandline: /usr/bin/unattended-upgrade
+Commandline: /usr/bin/unattended-upgrade
+Commandline: /usr/bin/unattended-upgrade
+Commandline: apt upgrade
+Commandline: apt install docker.io
+Commandline: apt install shellcheck
+Commandline: apt install xbacklight
+Commandline: apt remove xbacklight
+Commandline: apt install xbacklight
+Commandline: apt remove xbacklight
+Commandline: apt install tree
+Commandline: apt-get install apt-clone
