@@ -127,7 +127,6 @@ call plug#begin()
   Plug 'luochen1990/rainbow'
   Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
   Plug 'junegunn/goyo.vim'
-  Plug 'sunaku/vim-shortcut'
 call plug#end()
 
 " vim-cool
@@ -138,20 +137,14 @@ let g:easygit_enable_command = 1
 
 let g:mapleader = ','
 
-Shortcut show shortcut menu
-  \ noremap <silent> <Leader><Leader> :Shortcuts<Return>
-Shortcut fallback to shortcut menu on partial entry
-  \ noremap <silent> <Leader> :Shortcuts<Return>
-Shortcut toogle Goyo
-  \ noremap <silent> <Leader>g :Goyo<Return>
-Shortcut toogle spell
-  \ nnoremap <leader>s :set invspell<CR>
+noremap <silent> <Leader>d :Goyo<Return>
+nnoremap <leader>s :set invspell<CR>
 
 " NERDTree
 let NERDTreeShowHidden=1
 let NERDTreeQuitOnOpen=1
-Shortcut show NERDTree
-  \ map <Leader>n :NERDTreeToggle<CR>
+map <Leader>n :NERDTreeToggle<CR>
+map <Leader>r :NERDTreeFind<CR>
 
 " Ale
 let g:ale_fixers = {}
@@ -167,21 +160,14 @@ let g:ale_fix_on_save = 1
 
 " #FZF
 let g:fzf_command_prefix = 'Fzf'
-Shortcut search in buffers
-  \ nnoremap <Leader>b :FzfBuffers<CR>
-Shortcut search in history
-  \ nnoremap <Leader>h :FzfHistory<CR>
-Shortcut search in BTags
-  \ nnoremap <Leader>t :FzfBTags<CR>
-Shortcut search in Tags
-  \ nnoremap <Leader>T :FzfTags<CR>
-Shortcut search in files
-  \ nnoremap <C-p> :FzfFiles<CR>
-" Have FZF list all tracked files plus untracked files minus your ignored files
-Shortcut search in git files
-  \ nnoremap <Leader>p :FzfGitFiles --exclude-standard --others --cached<CR>
-Shortcut search - rg
-  \ nnoremap <Leader>gt :FzfRg<CR>
+nnoremap <Leader>b :FzfBuffers<CR>
+nnoremap <Leader>h :FzfHistory<CR>
+nnoremap <Leader>t :FzfBTags<CR>
+nnoremap <Leader>T :FzfTags<CR>
+" nnoremap <Leader>f :FzfFiles<CR>
+nnoremap <Leader>f :FzfGitFiles --exclude-standard --others --cached<CR>
+nnoremap <Leader>g :FzfRg<CR>
+nnoremap <leader>p :w <bar>:silent !prettier --arrow-parens always --no-semi --single-quote --write %<cr>
 
 " NeoSolarized
 set termguicolors
