@@ -17,6 +17,9 @@ let g:loaded_vimballPlugin = 1
 let g:loaded_zip = 1
 let g:loaded_zipPlugin = 1
 
+" :help cmdline-history
+set history=1000
+
 " Tabs and indents
 set textwidth=80    " Text width maximum chars before wrapping
 set expandtab       " Expand tabs to spaces.
@@ -35,7 +38,7 @@ set updatetime=400  " Idle time to write swap and trigger CursorHold
 set ttimeoutlen=10  " Time out on key codes
 
 " Searching
-set ignorecase      " Search ignoring case
+" set ignorecase      " Search ignoring case
 set smartcase       " Keep case when searching with *
 set infercase       " Adjust case in insert completion mode
 set incsearch       " Incremental search
@@ -55,6 +58,7 @@ set whichwrap+=h,l,<,>,[,],~    " Move to following line on certain keys
 set splitbelow splitright       " Splits open bottom right
 set switchbuf=useopen,usetab    " Jump to the first open window in any tab
 set switchbuf+=vsplit           " Switch buffer behavior to vsplit
+set hidden                      " allow to switch the buffer without saving
 set backspace=indent,eol,start  " Intuitive backspacing in insert mode
 set diffopt=filler,iwhite       " Diff mode: show fillers, ignore whitespace
 set completeopt=menuone         " Always show menu, even for one item
@@ -114,20 +118,36 @@ syntax on                   " syntax highlighting
 
 
 call plug#begin()
+  Plug 'tpope/vim-fugitive'  " :GGrep
+  Plug 'tpope/vim-rhubarb'   " :GBrowser
+  Plug 'tpope/vim-surround'
+  " Plug 'tpope/vim-sensible' " TODO: vim defaults
+
   Plug 'sheerun/vim-polyglot'
   Plug 'scrooloose/nerdtree'
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
   Plug 'junegunn/fzf.vim'
   Plug 'dense-analysis/ale'
   Plug 'iCyMind/NeoSolarized'
-  Plug 'chemzqm/vim-easygit'
+  " Plug 'chemzqm/vim-easygit'
   Plug 'romainl/vim-cool'
   " Plug 'itchyny/lightline.vim'
-  Plug 'ludovicchabant/vim-gutentags'
-  Plug 'luochen1990/rainbow'
-  Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
+  " Plug 'ludovicchabant/vim-gutentags'
+  " Plug 'luochen1990/rainbow'
+  " Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
   Plug 'junegunn/goyo.vim'
+  " Plug 'sonph/onehalf', {'rtp': 'vim/'}
+  " Plug 'aperezdc/vim-template'
+
+  Plug 'SirVer/ultisnips'
+  Plug 'honza/vim-snippets'
 call plug#end()
+
+" vim-grep
+" nnoremap gr :<C-u>Grep<Space>
+" nnoremap <silent> K :<C-u>Grep<CR>
+" vnoremap <silent> K :Grep<CR>
+" nnoremap <Leader>g :Grep<CR>
 
 " vim-cool
 let g:CoolTotalMatches = 1
@@ -151,28 +171,52 @@ let g:ale_fixers = {}
 let g:ale_fixers['javascript'] = ['prettier', 'eslint']
 let g:ale_fixers['json'] = ['prettier']
 let g:ale_fixers['scss'] = ['stylelint']
-let g:ale_fix_on_save = 1 " Fix files automatically on save
+" let g:ale_fix_on_save = 1 " Fix files automatically on save
 let g:ale_pattern_options = {
 \ '\.min\.js$': {'ale_linters': [], 'ale_fixers': []},
 \ '\.min\.css$': {'ale_linters': [], 'ale_fixers': []},
 \}
-let g:ale_fix_on_save = 1
 
 " #FZF
 let g:fzf_command_prefix = 'Fzf'
+command! -bang -nargs=* GGrep
+  \ call fzf#vim#grep(
+  \   'git grep --line-number '.shellescape(<q-args>), 0,
+  \   { 'dir': systemlist('git rev-parse --show-toplevel')[0] }, <bang>0)
+
+command! -bang -nargs=+ GGrep1 call s:fzf_git_grep('<args>')
+function! s:fzf_git_grep(args) abort
+  let dir = s:get_git_base_path(expand("%:p:h"))
+  if dir == -1
+    echo 'file not found .git'
+    return
+  endif
+  call fzf#run({
+      \ 'source': 'git grep -n -I ' . a:args,
+      \ 'sink': function('s:line_handler'),
+      \ 'dir': dir,
+      \ 'up': '~40%',
+      \ 'options': '+m'
+      \ })
+endfunction
+
 nnoremap <Leader>b :FzfBuffers<CR>
 nnoremap <Leader>h :FzfHistory<CR>
 nnoremap <Leader>t :FzfBTags<CR>
 nnoremap <Leader>T :FzfTags<CR>
 " nnoremap <Leader>f :FzfFiles<CR>
 nnoremap <Leader>f :FzfGitFiles --exclude-standard --others --cached<CR>
-nnoremap <Leader>g :FzfRg<CR>
-nnoremap <leader>p :w <bar>:silent !prettier --arrow-parens always --no-semi --single-quote --write %<cr>
+" nnoremap <Leader>g :FzfRg<CR>
+nnoremap <Leader>g :Ggrep<CR>
+nnoremap <Leader>af :ALEFix<CR>
+nnoremap <Leader>an :ALENext<CR>
 
 " NeoSolarized
 set termguicolors
 colorscheme NeoSolarized
+" colorscheme onehalflight
 set background=dark
+" set background=dark
 
 " rainbow
 let g:rainbow_active = 1
