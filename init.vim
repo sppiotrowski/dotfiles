@@ -122,13 +122,16 @@ call plug#begin()
   Plug 'tpope/vim-rhubarb'   " :GBrowser
   Plug 'tpope/vim-surround'
   " Plug 'tpope/vim-sensible' " TODO: vim defaults
+  Plug 'prabirshrestha/vim-lsp'
 
   Plug 'sheerun/vim-polyglot'
   Plug 'scrooloose/nerdtree'
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
   Plug 'junegunn/fzf.vim'
   Plug 'dense-analysis/ale'
-  Plug 'iCyMind/NeoSolarized'
+  " Plug 'iCyMind/NeoSolarized'
+  " Plug 'morhetz/gruvbox'
+  Plug 'rebelot/kanagawa.nvim'
   " Plug 'chemzqm/vim-easygit'
   Plug 'romainl/vim-cool'
   " Plug 'itchyny/lightline.vim'
@@ -141,7 +144,11 @@ call plug#begin()
 
   Plug 'SirVer/ultisnips'
   Plug 'honza/vim-snippets'
+  Plug 'github/copilot.vim'
 call plug#end()
+
+" Github Copilot
+let g:copilot_node_command = "/usr/local/n/versions/node/18.19.0/bin/node"
 
 " vim-grep
 " nnoremap gr :<C-u>Grep<Space>
@@ -211,12 +218,10 @@ nnoremap <Leader>g :Ggrep<CR>
 nnoremap <Leader>af :ALEFix<CR>
 nnoremap <Leader>an :ALENext<CR>
 
-" NeoSolarized
 set termguicolors
-colorscheme NeoSolarized
-" colorscheme onehalflight
+colorscheme kanagawa
+" set background=light
 set background=dark
-" set background=dark
 
 " rainbow
 let g:rainbow_active = 1
